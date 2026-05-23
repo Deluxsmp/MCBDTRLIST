@@ -225,15 +225,13 @@
             border: 1px solid #30363d;
         }
 
-        /* -------------------------------------------
-           MCTIERS এর মতো পাশাপাশি (Horizontal) গ্রিড লেআউট
-        ------------------------------------------- */
+        /* MCTIERS এর মতো পাশাপাশি (Horizontal) গ্রিড লেআউট */
         .tier-grid-container {
             display: flex;
-            flex-direction: row; /* বক্সগুলো পাশাপাশি বসবে */
+            flex-direction: row;
             gap: 15px;
             width: 100%;
-            overflow-x: auto; /* ছোট স্ক্রিনে ডানে স্ক্রোল হবে, ভেঙে নিচে যাবে না */
+            overflow-x: auto;
             padding-bottom: 15px;
             align-items: flex-start;
         }
@@ -255,7 +253,7 @@
         }
 
         .tier-box {
-            min-width: 230px; /* প্রতিটি টায়ার কলামের নির্দিষ্ট সাইজ */
+            min-width: 230px;
             flex: 1;
             background-color: #161b22;
             border-radius: 6px;
@@ -285,11 +283,10 @@
             display: flex;
             flex-direction: column;
             gap: 4px;
-            max-height: 650px; /* খুব বেশি লম্বা হলে বক্সের ভেতরে স্ক্রোল হবে */
+            max-height: 650px;
             overflow-y: auto;
         }
 
-        /* লিস্টের ভেতরের স্ক্রোলবার হাইড রাখার জন্য */
         .tier-players-list::-webkit-scrollbar {
             width: 4px;
         }
@@ -393,89 +390,293 @@
     </div>
 
     <div id="vanilla" class="page-section">
-        <div class="tier-grid-container" id="vanilla-container"></div>
+        <div class="tier-grid-container">
+            <div class="tier-box">
+                <div class="tier-title t1-title">🏆 Tier 1</div>
+                <div class="tier-players-list">
+                    <div class="tier-player-item player-row-item"><div class="player-info"><div class="player-head"></div><div class="player-name">Upcoming 1</div></div><span class="up-arrow">▲</span></div>
+                    <div class="tier-player-item player-row-item"><div class="player-info"><div class="player-head"></div><div class="player-name">Upcoming 2</div></div><span class="up-arrow">▲</span></div>
+                    <div class="tier-player-item player-row-item"><div class="player-info"><div class="player-head"></div><div class="player-name">Upcoming 3</div></div><span class="up-arrow">▲</span></div>
+                </div>
+            </div>
+            <div class="tier-box">
+                <div class="tier-title t2-title">🥈 Tier 2</div>
+                <div class="tier-players-list">
+                    <div class="tier-player-item player-row-item"><div class="player-info"><div class="player-head"></div><div class="player-name">Upcoming 1</div></div><span class="up-arrow">▲</span></div>
+                    <div class="tier-player-item player-row-item"><div class="player-info"><div class="player-head"></div><div class="player-name">Upcoming 2</div></div><span class="up-arrow">▲</span></div>
+                </div>
+            </div>
+            <div class="tier-box">
+                <div class="tier-title t3-title">🥉 Tier 3</div>
+                <div class="tier-players-list">
+                    <div class="tier-player-item player-row-item"><div class="player-info"><div class="player-head"></div><div class="player-name">Upcoming 1</div></div><span class="up-arrow">▲</span></div>
+                </div>
+            </div>
+            <div class="tier-box">
+                <div class="tier-title t4-title">🎖️ Tier 4</div>
+                <div class="tier-players-list">
+                    <div class="tier-player-item player-row-item"><div class="player-info"><div class="player-head"></div><div class="player-name">Upcoming 1</div></div><span class="up-arrow">▲</span></div>
+                </div>
+            </div>
+            <div class="tier-box">
+                <div class="tier-title t5-title">💀 Tier 5</div>
+                <div class="tier-players-list">
+                    <div class="tier-player-item player-row-item"><div class="player-info"><div class="player-head"></div><div class="player-name">Upcoming 1</div></div><span class="up-arrow">▲</span></div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <div id="uhc" class="page-section">
-        <div class="tier-grid-container" id="uhc-container"></div>
+        <div class="tier-grid-container">
+            <div class="tier-box">
+                <div class="tier-title t1-title">🏆 Tier 1</div>
+                <div class="tier-players-list">
+                    <div class="tier-player-item player-row-item"><div class="player-info"><div class="player-head"></div><div class="player-name">Upcoming 1</div></div><span class="up-arrow">▲</span></div>
+                    <div class="tier-player-item player-row-item"><div class="player-info"><div class="player-head"></div><div class="player-name">Upcoming 2</div></div><span class="up-arrow">▲</span></div>
+                </div>
+            </div>
+            <div class="tier-box">
+                <div class="tier-title t2-title">🥈 Tier 2</div>
+                <div class="tier-players-list">
+                    <div class="tier-player-item player-row-item"><div class="player-info"><div class="player-head"></div><div class="player-name">Upcoming 1</div></div><span class="up-arrow">▲</span></div>
+                    <div class="tier-player-item player-row-item"><div class="player-info"><div class="player-head"></div><div class="player-name">Upcoming 2</div></div><span class="up-arrow">▲</span></div>
+                </div>
+            </div>
+            <div class="tier-box">
+                <div class="tier-title t3-title">🥉 Tier 3</div>
+                <div class="tier-players-list">
+                    <div class="tier-player-item player-row-item"><div class="player-info"><div class="player-head"></div><div class="player-name">Upcoming 1</div></div><span class="up-arrow">▲</span></div>
+                </div>
+            </div>
+            <div class="tier-box">
+                <div class="tier-title t4-title">🎖️ Tier 4</div>
+                <div class="tier-players-list">
+                    <div class="tier-player-item player-row-item"><div class="player-info"><div class="player-head"></div><div class="player-name">Upcoming 1</div></div><span class="up-arrow">▲</span></div>
+                </div>
+            </div>
+            <div class="tier-box">
+                <div class="tier-title t5-title">💀 Tier 5</div>
+                <div class="tier-players-list">
+                    <div class="tier-player-item player-row-item"><div class="player-info"><div class="player-head"></div><div class="player-name">Upcoming 1</div></div><span class="up-arrow">▲</span></div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <div id="pot" class="page-section">
-        <div class="tier-grid-container" id="pot-container"></div>
+        <div class="tier-grid-container">
+            <div class="tier-box">
+                <div class="tier-title t1-title">🏆 Tier 1</div>
+                <div class="tier-players-list">
+                    <div class="tier-player-item player-row-item"><div class="player-info"><div class="player-head"></div><div class="player-name">Upcoming 1</div></div><span class="up-arrow">▲</span></div>
+                </div>
+            </div>
+            <div class="tier-box">
+                <div class="tier-title t2-title">🥈 Tier 2</div>
+                <div class="tier-players-list">
+                    <div class="tier-player-item player-row-item"><div class="player-info"><div class="player-head"></div><div class="player-name">Upcoming 1</div></div><span class="up-arrow">▲</span></div>
+                </div>
+            </div>
+            <div class="tier-box">
+                <div class="tier-title t3-title">🥉 Tier 3</div>
+                <div class="tier-players-list">
+                    <div class="tier-player-item player-row-item"><div class="player-info"><div class="player-head"></div><div class="player-name">Upcoming 1</div></div><span class="up-arrow">▲</span></div>
+                </div>
+            </div>
+            <div class="tier-box">
+                <div class="tier-title t4-title">🎖️ Tier 4</div>
+                <div class="tier-players-list">
+                    <div class="tier-player-item player-row-item"><div class="player-info"><div class="player-head"></div><div class="player-name">Upcoming 1</div></div><span class="up-arrow">▲</span></div>
+                </div>
+            </div>
+            <div class="tier-box">
+                <div class="tier-title t5-title">💀 Tier 5</div>
+                <div class="tier-players-list">
+                    <div class="tier-player-item player-row-item"><div class="player-info"><div class="player-head"></div><div class="player-name">Upcoming 1</div></div><span class="up-arrow">▲</span></div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <div id="sword" class="page-section">
-        <div class="tier-grid-container" id="sword-container"></div>
+        <div class="tier-grid-container">
+            <div class="tier-box">
+                <div class="tier-title t1-title">🏆 Tier 1</div>
+                <div class="tier-players-list">
+                    <div class="tier-player-item player-row-item"><div class="player-info"><div class="player-head"></div><div class="player-name">Upcoming 1</div></div><span class="up-arrow">▲</span></div>
+                </div>
+            </div>
+            <div class="tier-box">
+                <div class="tier-title t2-title">🥈 Tier 2</div>
+                <div class="tier-players-list">
+                    <div class="tier-player-item player-row-item"><div class="player-info"><div class="player-head"></div><div class="player-name">Upcoming 1</div></div><span class="up-arrow">▲</span></div>
+                </div>
+            </div>
+            <div class="tier-box">
+                <div class="tier-title t3-title">🥉 Tier 3</div>
+                <div class="tier-players-list">
+                    <div class="tier-player-item player-row-item"><div class="player-info"><div class="player-head"></div><div class="player-name">Upcoming 1</div></div><span class="up-arrow">▲</span></div>
+                </div>
+            </div>
+            <div class="tier-box">
+                <div class="tier-title t4-title">🎖️ Tier 4</div>
+                <div class="tier-players-list">
+                    <div class="tier-player-item player-row-item"><div class="player-info"><div class="player-head"></div><div class="player-name">Upcoming 1</div></div><span class="up-arrow">▲</span></div>
+                </div>
+            </div>
+            <div class="tier-box">
+                <div class="tier-title t5-title">💀 Tier 5</div>
+                <div class="tier-players-list">
+                    <div class="tier-player-item player-row-item"><div class="player-info"><div class="player-head"></div><div class="player-name">Upcoming 1</div></div><span class="up-arrow">▲</span></div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <div id="axe" class="page-section">
-        <div class="tier-grid-container" id="axe-container"></div>
+        <div class="tier-grid-container">
+            <div class="tier-box">
+                <div class="tier-title t1-title">🏆 Tier 1</div>
+                <div class="tier-players-list">
+                    <div class="tier-player-item player-row-item"><div class="player-info"><div class="player-head"></div><div class="player-name">Upcoming 1</div></div><span class="up-arrow">▲</span></div>
+                </div>
+            </div>
+            <div class="tier-box">
+                <div class="tier-title t2-title">🥈 Tier 2</div>
+                <div class="tier-players-list">
+                    <div class="tier-player-item player-row-item"><div class="player-info"><div class="player-head"></div><div class="player-name">Upcoming 1</div></div><span class="up-arrow">▲</span></div>
+                </div>
+            </div>
+            <div class="tier-box">
+                <div class="tier-title t3-title">🥉 Tier 3</div>
+                <div class="tier-players-list">
+                    <div class="tier-player-item player-row-item"><div class="player-info"><div class="player-head"></div><div class="player-name">Upcoming 1</div></div><span class="up-arrow">▲</span></div>
+                </div>
+            </div>
+            <div class="tier-box">
+                <div class="tier-title t4-title">🎖️ Tier 4</div>
+                <div class="tier-players-list">
+                    <div class="tier-player-item player-row-item"><div class="player-info"><div class="player-head"></div><div class="player-name">Upcoming 1</div></div><span class="up-arrow">▲</span></div>
+                </div>
+            </div>
+            <div class="tier-box">
+                <div class="tier-title t5-title">💀 Tier 5</div>
+                <div class="tier-players-list">
+                    <div class="tier-player-item player-row-item"><div class="player-info"><div class="player-head"></div><div class="player-name">Upcoming 1</div></div><span class="up-arrow">▲</span></div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <div id="netherop" class="page-section">
-        <div class="tier-grid-container" id="netherop-container"></div>
+        <div class="tier-grid-container">
+            <div class="tier-box">
+                <div class="tier-title t1-title">🏆 Tier 1</div>
+                <div class="tier-players-list">
+                    <div class="tier-player-item player-row-item"><div class="player-info"><div class="player-head"></div><div class="player-name">Upcoming 1</div></div><span class="up-arrow">▲</span></div>
+                    <div class="tier-player-item player-row-item"><div class="player-info"><div class="player-head"></div><div class="player-name">Upcoming 2</div></div><span class="up-arrow">▲</span></div>
+                </div>
+            </div>
+            <div class="tier-box">
+                <div class="tier-title t2-title">🥈 Tier 2</div>
+                <div class="tier-players-list">
+                    <div class="tier-player-item player-row-item"><div class="player-info"><div class="player-head"></div><div class="player-name">Upcoming 1</div></div><span class="up-arrow">▲</span></div>
+                </div>
+            </div>
+            <div class="tier-box">
+                <div class="tier-title t3-title">🥉 Tier 3</div>
+                <div class="tier-players-list">
+                    <div class="tier-player-item player-row-item"><div class="player-info"><div class="player-head"></div><div class="player-name">Upcoming 1</div></div><span class="up-arrow">▲</span></div>
+                </div>
+            </div>
+            <div class="tier-box">
+                <div class="tier-title t4-title">🎖️ Tier 4</div>
+                <div class="tier-players-list">
+                    <div class="tier-player-item player-row-item"><div class="player-info"><div class="player-head"></div><div class="player-name">Upcoming 1</div></div><span class="up-arrow">▲</span></div>
+                </div>
+            </div>
+            <div class="tier-box">
+                <div class="tier-title t5-title">💀 Tier 5</div>
+                <div class="tier-players-list">
+                    <div class="tier-player-item player-row-item"><div class="player-info"><div class="player-head"></div><div class="player-name">Upcoming 1</div></div><span class="up-arrow">▲</span></div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <div id="smp" class="page-section">
-        <div class="tier-grid-container" id="smp-container"></div>
+        <div class="tier-grid-container">
+            <div class="tier-box">
+                <div class="tier-title t1-title">🏆 Tier 1</div>
+                <div class="tier-players-list">
+                    <div class="tier-player-item player-row-item"><div class="player-info"><div class="player-head"></div><div class="player-name">Upcoming 1</div></div><span class="up-arrow">▲</span></div>
+                </div>
+            </div>
+            <div class="tier-box">
+                <div class="tier-title t2-title">🥈 Tier 2</div>
+                <div class="tier-players-list">
+                    <div class="tier-player-item player-row-item"><div class="player-info"><div class="player-head"></div><div class="player-name">Upcoming 1</div></div><span class="up-arrow">▲</span></div>
+                </div>
+            </div>
+            <div class="tier-box">
+                <div class="tier-title t3-title">🥉 Tier 3</div>
+                <div class="tier-players-list">
+                    <div class="tier-player-item player-row-item"><div class="player-info"><div class="player-head"></div><div class="player-name">Upcoming 1</div></div><span class="up-arrow">▲</span></div>
+                </div>
+            </div>
+            <div class="tier-box">
+                <div class="tier-title t4-title">🎖️ Tier 4</div>
+                <div class="tier-players-list">
+                    <div class="tier-player-item player-row-item"><div class="player-info"><div class="player-head"></div><div class="player-name">Upcoming 1</div></div><span class="up-arrow">▲</span></div>
+                </div>
+            </div>
+            <div class="tier-box">
+                <div class="tier-title t5-title">💀 Tier 5</div>
+                <div class="tier-players-list">
+                    <div class="tier-player-item player-row-item"><div class="player-info"><div class="player-head"></div><div class="player-name">Upcoming 1</div></div><span class="up-arrow">▲</span></div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <div id="mace" class="page-section">
-        <div class="tier-grid-container" id="mace-container"></div>
+        <div class="tier-grid-container">
+            <div class="tier-box">
+                <div class="tier-title t1-title">🏆 Tier 1</div>
+                <div class="tier-players-list">
+                    <div class="tier-player-item player-row-item"><div class="player-info"><div class="player-head"></div><div class="player-name">Upcoming 1</div></div><span class="up-arrow">▲</span></div>
+                </div>
+            </div>
+            <div class="tier-box">
+                <div class="tier-title t2-title">🥈 Tier 2</div>
+                <div class="tier-players-list">
+                    <div class="tier-player-item player-row-item"><div class="player-info"><div class="player-head"></div><div class="player-name">Upcoming 1</div></div><span class="up-arrow">▲</span></div>
+                </div>
+            </div>
+            <div class="tier-box">
+                <div class="tier-title t3-title">🥉 Tier 3</div>
+                <div class="tier-players-list">
+                    <div class="tier-player-item player-row-item"><div class="player-info"><div class="player-head"></div><div class="player-name">Upcoming 1</div></div><span class="up-arrow">▲</span></div>
+                </div>
+            </div>
+            <div class="tier-box">
+                <div class="tier-title t4-title">🎖️ Tier 4</div>
+                <div class="tier-players-list">
+                    <div class="tier-player-item player-row-item"><div class="player-info"><div class="player-head"></div><div class="player-name">Upcoming 1</div></div><span class="up-arrow">▲</span></div>
+                </div>
+            </div>
+            <div class="tier-box">
+                <div class="tier-title t5-title">💀 Tier 5</div>
+                <div class="tier-players-list">
+                    <div class="tier-player-item player-row-item"><div class="player-info"><div class="player-head"></div><div class="player-name">Upcoming 1</div></div><span class="up-arrow">▲</span></div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script>
-        // প্রতিটি টায়ারের প্লেয়ার কাউন্ট কনফিগারেশন 
-        const tierConfigs = [
-            { level: 1, title: '🏆 Tier 1', class: 't1-title', count: 5 },
-            { level: 2, title: '🥈 Tier 2', class: 't2-title', count: 10 },
-            { level: 3, title: '🥉 Tier 3', class: 't3-title', count: 30 },
-            { level: 4, title: '🎖️ Tier 4', class: 't4-title', count: 40 },
-            { level: 5, title: '💀 Tier 5', class: 't5-title', count: 50 }
-        ];
-
-        const targetContainers = [
-            'vanilla-container', 'uhc-container', 'pot-container', 
-            'sword-container', 'axe-container', 'netherop-container', 
-            'smp-container', 'mace-container'
-        ];
-
-        // লুপ চালিয়ে পাশাপাশি কলাম এবং নাম্বারসহ Upcoming নাম জেনারেট করা হচ্ছে
-        targetContainers.forEach(containerId => {
-            const container = document.getElementById(containerId);
-            if (!container) return;
-
-            tierConfigs.forEach(tier => {
-                const tierBox = document.createElement('div');
-                tierBox.className = 'tier-box';
-
-                const tierTitle = document.createElement('div');
-                tierTitle.className = `tier-title ${tier.class}`;
-                tierTitle.innerText = tier.title;
-                tierBox.appendChild(tierTitle);
-
-                const playerList = document.createElement('div');
-                playerList.className = 'tier-players-list';
-
-                for (let i = 1; i <= tier.count; i++) {
-                    const playerItem = document.createElement('div');
-                    playerItem.className = 'tier-player-item player-row-item';
-                    playerItem.innerHTML = `
-                        <div class="player-info">
-                            <div class="player-head"></div>
-                            <div class="player-name">Upcoming ${i}</div>
-                        </div>
-                        <span class="up-arrow">▲</span>
-                    `;
-                    playerList.appendChild(playerItem);
-                }
-
-                tierBox.appendChild(playerList);
-                container.appendChild(tierBox);
-            });
-        });
-
-        // পেজ পরিবর্তন করার ফাংশন
+        // পেজ চেঞ্জ করার সিম্পল ফাংশন
         function openPage(pageId) {
             var pages = document.getElementsByClassName('page-section');
             for (var i = 0; i < pages.length; i++) {
@@ -492,7 +693,6 @@
             if (window.event && window.event.currentTarget) {
                 window.event.currentTarget.classList.add('active');
             }
-
             liveSearch();
         }
 
@@ -500,12 +700,10 @@
         function liveSearch() {
             var input = document.getElementById('tierSearch');
             var filter = input.value.toUpperCase();
-            
             var activePage = document.querySelector('.page-section.active');
             if (!activePage) return;
 
             var playerRows = activePage.getElementsByClassName('player-row-item');
-
             for (var i = 0; i < playerRows.length; i++) {
                 var nameContainer = playerRows[i].getElementsByClassName('player-name')[0];
                 if (nameContainer) {
@@ -519,6 +717,5 @@
             }
         }
     </script>
-
 </body>
-</html>
+                                                                                               </html>
