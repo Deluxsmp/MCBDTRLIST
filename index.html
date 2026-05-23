@@ -22,16 +22,17 @@
             align-items: center;
         }
 
-        /* হেডার */
+        /* হেডার ও ডিসকর্ড পজিশন */
         header {
             width: 100%;
             max-width: 1100px;
             text-align: center;
             margin-bottom: 20px;
-            padding: 15px;
+            padding: 20px;
             background-color: #161b22;
             border-radius: 8px;
             border: 1px solid #21262d;
+            position: relative;
         }
 
         header h1 {
@@ -45,6 +46,52 @@
             color: #8b949e;
             font-size: 0.9rem;
             margin-top: 5px;
+        }
+
+        /* ডিসকর্ড বাটন স্টাইল */
+        .discord-btn {
+            position: absolute;
+            top: 22px;
+            right: 20px;
+            background-color: #5865F2;
+            color: #ffffff;
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: background-color 0.2s;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+        }
+
+        .discord-btn:hover {
+            background-color: #4752C4;
+        }
+
+        /* সার্চ কন্টেইনার */
+        .search-container {
+            width: 100%;
+            max-width: 1100px;
+            margin-bottom: 20px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 12px 16px;
+            background-color: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 6px;
+            color: #ffffff;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .search-input:focus {
+            border-color: #f08a24;
         }
 
         /* নেভিগেশন বাটন গ্রুপ */
@@ -232,6 +279,18 @@
             color: #58a6ff;
             font-size: 0.8rem;
         }
+
+        /* মোবাইল রেসপন্সিভ ফিক্স */
+        @media (max-width: 650px) {
+            header {
+                padding-top: 65px;
+            }
+            .discord-btn {
+                top: 10px;
+                right: 50%;
+                transform: translateX(50%);
+            }
+        }
     </style>
 </head>
 <body>
@@ -239,7 +298,14 @@
     <header>
         <h1>Combat Tier List</h1>
         <p>Official Player Database & Tier Rankings</p>
+        <a href="https://discord.gg/zHmRdQ9FES" target="_blank" class="discord-btn">
+            💬 Discord
+        </a>
     </header>
+
+    <div class="search-container">
+        <input type="text" id="tierSearch" class="search-input" placeholder="🔍 পেজে থাকা প্লেয়ারের নাম লিখে সার্চ করুন..." onkeyup="liveSearch()">
+    </div>
 
     <div class="nav-container">
         <button class="nav-btn active" onclick="openPage('overall')">📊 Overall</button>
@@ -263,7 +329,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
+                <tr class="player-row-item">
                     <td class="rank-col">1.</td>
                     <td>
                         <div class="player-info">
@@ -284,12 +350,12 @@
                         </div>
                     </td>
                 </tr>
-                <tr>
+                <tr class="player-row-item">
                     <td class="rank-col">2.</td>
                     <td>
                         <div class="player-info">
                             <div class="player-head"></div>
-                            <div class="player-name">Upcoming</div>
+                            <div class="player-name">SamplePlayer</div>
                         </div>
                     </td>
                     <td>
@@ -314,19 +380,18 @@
             <div class="tier-box">
                 <div class="tier-title t1-title">🏆 Tier 1</div>
                 <div class="tier-players-list">
-                    <div class="tier-player-item"><div class="player-info"><div class="player-head"></div><div class="player-name">Upcoming</div></div><span class="up-arrow">▲</span></div>
+                    <div class="tier-player-item player-row-item"><div class="player-info"><div class="player-head"></div><div class="player-name">Upcoming</div></div><span class="up-arrow">▲</span></div>
                 </div>
             </div>
             <div class="tier-box">
                 <div class="tier-title t2-title">🥈 Tier 2</div>
                 <div class="tier-players-list">
-                    <div class="tier-player-item"><div class="player-info"><div class="player-head"></div><div class="player-name">Upcoming</div></div><span class="up-arrow">▲</span></div>
+                    <div class="tier-player-item player-row-item"><div class="player-info"><div class="player-head"></div><div class="player-name">SamplePlayer</div></div><span class="up-arrow">▲</span></div>
                 </div>
             </div>
             <div class="tier-box">
                 <div class="tier-title t3-title">🥉 Tier 3</div>
                 <div class="tier-players-list">
-                    <div class="tier-player-item"><div class="player-info"><div class="player-head"></div><div class="player-name">Upcoming</div></div><span class="up-arrow">▲</span></div>
                 </div>
             </div>
         </div>
@@ -337,19 +402,18 @@
             <div class="tier-box">
                 <div class="tier-title t1-title">🏆 Tier 1</div>
                 <div class="tier-players-list">
-                    <div class="tier-player-item"><div class="player-info"><div class="player-head"></div><div class="player-name">Upcoming</div></div><span class="up-arrow">▲</span></div>
+                    <div class="tier-player-item player-row-item"><div class="player-info"><div class="player-head"></div><div class="player-name">Upcoming</div></div><span class="up-arrow">▲</span></div>
                 </div>
             </div>
             <div class="tier-box">
                 <div class="tier-title t2-title">🥈 Tier 2</div>
                 <div class="tier-players-list">
-                    <div class="tier-player-item"><div class="player-info"><div class="player-head"></div><div class="player-name">Upcoming</div></div><span class="up-arrow">▲</span></div>
                 </div>
             </div>
             <div class="tier-box">
                 <div class="tier-title t3-title">🥉 Tier 3</div>
                 <div class="tier-players-list">
-                    <div class="tier-player-item"><div class="player-info"><div class="player-head"></div><div class="player-name">Upcoming</div></div><span class="up-arrow">▲</span></div>
+                    <div class="tier-player-item player-row-item"><div class="player-info"><div class="player-head"></div><div class="player-name">SamplePlayer</div></div><span class="up-arrow">▲</span></div>
                 </div>
             </div>
         </div>
@@ -360,19 +424,18 @@
             <div class="tier-box">
                 <div class="tier-title t1-title">🏆 Tier 1</div>
                 <div class="tier-players-list">
-                    <div class="tier-player-item"><div class="player-info"><div class="player-head"></div><div class="player-name">Upcoming</div></div><span class="up-arrow">▲</span></div>
+                    <div class="tier-player-item player-row-item"><div class="player-info"><div class="player-head"></div><div class="player-name">SamplePlayer</div></div><span class="up-arrow">▲</span></div>
                 </div>
             </div>
             <div class="tier-box">
                 <div class="tier-title t2-title">🥈 Tier 2</div>
                 <div class="tier-players-list">
-                    <div class="tier-player-item"><div class="player-info"><div class="player-head"></div><div class="player-name">Upcoming</div></div><span class="up-arrow">▲</span></div>
+                    <div class="tier-player-item player-row-item"><div class="player-info"><div class="player-head"></div><div class="player-name">Upcoming</div></div><span class="up-arrow">▲</span></div>
                 </div>
             </div>
             <div class="tier-box">
                 <div class="tier-title t3-title">🥉 Tier 3</div>
                 <div class="tier-players-list">
-                    <div class="tier-player-item"><div class="player-info"><div class="player-head"></div><div class="player-name">Upcoming</div></div><span class="up-arrow">▲</span></div>
                 </div>
             </div>
         </div>
@@ -383,19 +446,18 @@
             <div class="tier-box">
                 <div class="tier-title t1-title">🏆 Tier 1</div>
                 <div class="tier-players-list">
-                    <div class="tier-player-item"><div class="player-info"><div class="player-head"></div><div class="player-name">Upcoming</div></div><span class="up-arrow">▲</span></div>
+                    <div class="tier-player-item player-row-item"><div class="player-info"><div class="player-head"></div><div class="player-name">Upcoming</div></div><span class="up-arrow">▲</span></div>
                 </div>
             </div>
             <div class="tier-box">
                 <div class="tier-title t2-title">🥈 Tier 2</div>
                 <div class="tier-players-list">
-                    <div class="tier-player-item"><div class="player-info"><div class="player-head"></div><div class="player-name">Upcoming</div></div><span class="up-arrow">▲</span></div>
+                    <div class="tier-player-item player-row-item"><div class="player-info"><div class="player-head"></div><div class="player-name">SamplePlayer</div></div><span class="up-arrow">▲</span></div>
                 </div>
             </div>
             <div class="tier-box">
                 <div class="tier-title t3-title">🥉 Tier 3</div>
                 <div class="tier-players-list">
-                    <div class="tier-player-item"><div class="player-info"><div class="player-head"></div><div class="player-name">Upcoming</div></div><span class="up-arrow">▲</span></div>
                 </div>
             </div>
         </div>
@@ -406,19 +468,18 @@
             <div class="tier-box">
                 <div class="tier-title t1-title">🏆 Tier 1</div>
                 <div class="tier-players-list">
-                    <div class="tier-player-item"><div class="player-info"><div class="player-head"></div><div class="player-name">Upcoming</div></div><span class="up-arrow">▲</span></div>
+                    <div class="tier-player-item player-row-item"><div class="player-info"><div class="player-head"></div><div class="player-name">SamplePlayer</div></div><span class="up-arrow">▲</span></div>
                 </div>
             </div>
             <div class="tier-box">
                 <div class="tier-title t2-title">🥈 Tier 2</div>
                 <div class="tier-players-list">
-                    <div class="tier-player-item"><div class="player-info"><div class="player-head"></div><div class="player-name">Upcoming</div></div><span class="up-arrow">▲</span></div>
                 </div>
             </div>
             <div class="tier-box">
                 <div class="tier-title t3-title">🥉 Tier 3</div>
                 <div class="tier-players-list">
-                    <div class="tier-player-item"><div class="player-info"><div class="player-head"></div><div class="player-name">Upcoming</div></div><span class="up-arrow">▲</span></div>
+                    <div class="tier-player-item player-row-item"><div class="player-info"><div class="player-head"></div><div class="player-name">Upcoming</div></div><span class="up-arrow">▲</span></div>
                 </div>
             </div>
         </div>
@@ -429,19 +490,18 @@
             <div class="tier-box">
                 <div class="tier-title t1-title">🏆 Tier 1</div>
                 <div class="tier-players-list">
-                    <div class="tier-player-item"><div class="player-info"><div class="player-head"></div><div class="player-name">Upcoming</div></div><span class="up-arrow">▲</span></div>
+                    <div class="tier-player-item player-row-item"><div class="player-info"><div class="player-head"></div><div class="player-name">Upcoming</div></div><span class="up-arrow">▲</span></div>
                 </div>
             </div>
             <div class="tier-box">
                 <div class="tier-title t2-title">🥈 Tier 2</div>
                 <div class="tier-players-list">
-                    <div class="tier-player-item"><div class="player-info"><div class="player-head"></div><div class="player-name">Upcoming</div></div><span class="up-arrow">▲</span></div>
+                    <div class="tier-player-item player-row-item"><div class="player-info"><div class="player-head"></div><div class="player-name">SamplePlayer</div></div><span class="up-arrow">▲</span></div>
                 </div>
             </div>
             <div class="tier-box">
                 <div class="tier-title t3-title">🥉 Tier 3</div>
                 <div class="tier-players-list">
-                    <div class="tier-player-item"><div class="player-info"><div class="player-head"></div><div class="player-name">Upcoming</div></div><span class="up-arrow">▲</span></div>
                 </div>
             </div>
         </div>
@@ -452,19 +512,18 @@
             <div class="tier-box">
                 <div class="tier-title t1-title">🏆 Tier 1</div>
                 <div class="tier-players-list">
-                    <div class="tier-player-item"><div class="player-info"><div class="player-head"></div><div class="player-name">Upcoming</div></div><span class="up-arrow">▲</span></div>
+                    <div class="tier-player-item player-row-item"><div class="player-info"><div class="player-head"></div><div class="player-name">SamplePlayer</div></div><span class="up-arrow">▲</span></div>
                 </div>
             </div>
             <div class="tier-box">
                 <div class="tier-title t2-title">🥈 Tier 2</div>
                 <div class="tier-players-list">
-                    <div class="tier-player-item"><div class="player-info"><div class="player-head"></div><div class="player-name">Upcoming</div></div><span class="up-arrow">▲</span></div>
+                    <div class="tier-player-item player-row-item"><div class="player-info"><div class="player-head"></div><div class="player-name">Upcoming</div></div><span class="up-arrow">▲</span></div>
                 </div>
             </div>
             <div class="tier-box">
                 <div class="tier-title t3-title">🥉 Tier 3</div>
                 <div class="tier-players-list">
-                    <div class="tier-player-item"><div class="player-info"><div class="player-head"></div><div class="player-name">Upcoming</div></div><span class="up-arrow">▲</span></div>
                 </div>
             </div>
         </div>
@@ -475,25 +534,25 @@
             <div class="tier-box">
                 <div class="tier-title t1-title">🏆 Tier 1</div>
                 <div class="tier-players-list">
-                    <div class="tier-player-item"><div class="player-info"><div class="player-head"></div><div class="player-name">Upcoming</div></div><span class="up-arrow">▲</span></div>
+                    <div class="tier-player-item player-row-item"><div class="player-info"><div class="player-head"></div><div class="player-name">Upcoming</div></div><span class="up-arrow">▲</span></div>
                 </div>
             </div>
             <div class="tier-box">
                 <div class="tier-title t2-title">🥈 Tier 2</div>
                 <div class="tier-players-list">
-                    <div class="tier-player-item"><div class="player-info"><div class="player-head"></div><div class="player-name">Upcoming</div></div><span class="up-arrow">▲</span></div>
                 </div>
             </div>
             <div class="tier-box">
                 <div class="tier-title t3-title">🥉 Tier 3</div>
                 <div class="tier-players-list">
-                    <div class="tier-player-item"><div class="player-info"><div class="player-head"></div><div class="player-name">Upcoming</div></div><span class="up-arrow">▲</span></div>
+                    <div class="tier-player-item player-row-item"><div class="player-info"><div class="player-head"></div><div class="player-name">SamplePlayer</div></div><span class="up-arrow">▲</span></div>
                 </div>
             </div>
         </div>
     </div>
 
     <script>
+        // পেজ সুইচ করার ফাংশন
         function openPage(pageId) {
             var pages = document.getElementsByClassName('page-section');
             for (var i = 0; i < pages.length; i++) {
@@ -506,9 +565,41 @@
             }
 
             document.getElementById(pageId).classList.add('active');
-            event.currentTarget.classList.add('active');
+            
+            if (event && event.currentTarget) {
+                event.currentTarget.classList.add('active');
+            }
+
+            // পেজ পরিবর্তনের সাথে সাথে সার্চ ফিল্টার রিসেট বা আপডেট করবে
+            liveSearch();
+        }
+
+        // লাইভ স্মার্ট সার্চ ফিল্টার
+        function liveSearch() {
+            var input = document.getElementById('tierSearch');
+            var filter = input.value.toUpperCase();
+            
+            // বর্তমানে কোন পেজটি একটিভ বা খোলা আছে তা খুঁজে বের করবে
+            var activePage = document.querySelector('.page-section.active');
+            if (!activePage) return;
+
+            // শুধুমাত্র একটিভ পেজের ভেতরের প্লেয়ার আইটেমগুলোকে ফিল্টার করবে
+            var playerRows = activePage.getElementsByClassName('player-row-item');
+
+            for (var i = 0; i < playerRows.length; i++) {
+                var nameContainer = playerRows[i].getElementsByClassName('player-name')[0];
+                if (nameContainer) {
+                    var nameText = nameContainer.textContent || nameContainer.innerText;
+                    // নাম সার্চের সাথে মিললে দেখাবে, না মিললে হাইড করে দিবে
+                    if (nameText.toUpperCase().indexOf(filter) > -1) {
+                        playerRows[i].style.display = "";
+                    } else {
+                        playerRows[i].style.display = "none";
+                    }
+                }
+            }
         }
     </script>
 
 </body>
-                                                                                                                                                           </html>
+    </html>
