@@ -22,10 +22,10 @@
             align-items: center;
         }
 
-        /* হেডার ও ডিসকর্ড পজিশন */
+        /* হেডার ও ডিসকورد পজিশন */
         header {
             width: 100%;
-            max-width: 1200px;
+            max-width: 800px;
             text-align: center;
             margin-bottom: 20px;
             padding: 20px;
@@ -48,7 +48,6 @@
             margin-top: 5px;
         }
 
-        /* ডিসকর্ড বাটন স্টাইল */
         .discord-btn {
             position: absolute;
             top: 22px;
@@ -74,7 +73,7 @@
         /* সার্চ কন্টেইনার */
         .search-container {
             width: 100%;
-            max-width: 1200px;
+            max-width: 800px;
             margin-bottom: 20px;
         }
 
@@ -99,7 +98,7 @@
             display: flex;
             gap: 10px;
             width: 100%;
-            max-width: 1200px;
+            max-width: 800px;
             margin-bottom: 25px;
             overflow-x: auto;
             padding-bottom: 8px;
@@ -136,20 +135,18 @@
             border-color: #f08a24;
         }
 
-        /* কমন কন্টেন্ট হোলルダー */
+        /* কমন কন্টেন্ট হোল্ডার */
         .page-section {
             display: none;
             width: 100%;
-            max-width: 1200px;
+            max-width: 800px;
         }
 
         .page-section.active {
             display: block;
         }
 
-        /* -------------------------------------------
-           ১ম পেজ: OVERALL RANKINGS (টেবিল ভিউ)
-        ------------------------------------------- */
+        /* OVERALL RANKINGS (টেবিল ভিউ) */
         .overall-table {
             width: 100%;
             background-color: #161b22;
@@ -188,8 +185,8 @@
         }
 
         .player-head {
-            width: 32px;
-            height: 32px;
+            width: 28px;
+            height: 28px;
             background-color: #30363d;
             border: 2px solid #444c56;
             border-radius: 4px;
@@ -198,17 +195,16 @@
         }
         .player-head::before, .player-head::after {
             content: ''; position: absolute; width: 4px; height: 4px;
-            background-color: #0d1117; top: 10px;
+            background-color: #0d1117; top: 8px;
         }
-        .player-head::before { left: 6px; }
-        .player-head::after { right: 6px; }
+        .player-head::before { left: 5px; }
+        .player-head::after { right: 5px; }
 
         .player-name {
             font-weight: 600;
             color: #f0f6fc;
         }
 
-        /* গেমমোড আইকন ব্যাজ স্টাইল */
         .mode-badge-group {
             display: flex;
             gap: 10px;
@@ -228,30 +224,17 @@
         }
 
         /* -------------------------------------------
-           ৫টি কলাম টিয়ার ভিউ (সব এক লাইনে পাশাপাশি থাকবে)
+           MCTIERS-এর মতো ফুল-উইডথ ভার্টিক্যাল লেআউট
         ------------------------------------------- */
-        .tier-columns-container {
+        .tier-vertical-container {
             display: flex;
-            flex-direction: row;
-            flex-wrap: nowrap; /* কোনো টায়ার নিচে নামবে না */
-            gap: 12px;
+            flex-direction: column; /* বক্সগুলো একটার নিচে আরেকটা বসবে */
+            gap: 20px;
             width: 100%;
-            overflow-x: auto; /* স্ক্রিন ছোট হলে পাশাপাশি স্ক্রোল হবে */
-            padding-bottom: 10px;
-        }
-
-        /* স্ক্রোলবার স্টাইল */
-        .tier-columns-container::-webkit-scrollbar {
-            height: 6px;
-        }
-        .tier-columns-container::-webkit-scrollbar-thumb {
-            background-color: #30363d;
-            border-radius: 10px;
         }
 
         .tier-box {
-            flex: 1;
-            min-width: 200px; /* প্রতিটি বক্সের মিনিমাম চওড়া */
+            width: 100%;
             background-color: #161b22;
             border-radius: 8px;
             border: 1px solid #21262d;
@@ -263,7 +246,8 @@
         .tier-title {
             padding: 12px;
             font-weight: bold;
-            text-align: center;
+            text-align: left; /* বাম পাশে টাইটেল থাকবে মেইন সাইটের মতো */
+            padding-left: 15px;
             text-transform: uppercase;
             font-size: 0.95rem;
         }
@@ -275,28 +259,32 @@
         .t5-title { background: linear-gradient(90deg, #a13d3d, #5a1e1e); color: #fff; }
 
         .tier-players-list {
-            padding: 10px;
-            max-height: 450px;
-            overflow-y: auto;
+            padding: 0; /* বর্ডার এবং ব্যাকগ্রাউন্ড সুন্দর মেলানোর জন্য প্যাডিং ০ */
             display: flex;
             flex-direction: column;
-            gap: 6px;
-            flex-grow: 1;
         }
 
         .tier-player-item {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            background-color: #21262d;
-            padding: 8px 12px;
-            border-radius: 6px;
-            border: 1px solid #30363d;
+            background-color: #161b22;
+            padding: 10px 15px;
+            border-bottom: 1px solid #21262d; /* প্রতিটি প্লেয়ারের নিচে হালকা দাগ */
+        }
+
+        .tier-player-item:last-child {
+            border-bottom: none; /* শেষের প্লেয়ারের নিচের বর্ডার থাকবে না */
+        }
+
+        .tier-player-item:hover {
+            background-color: #1f242c; /* মাউস নিলে ব্যাকগ্রাউন্ড একটু উজ্জ্বল হবে */
         }
 
         .up-arrow {
             color: #58a6ff;
             font-size: 0.8rem;
+            opacity: 0.6;
         }
 
         /* মোবাইল রেসপন্সিভ ফিক্স */
@@ -395,87 +383,89 @@
     </div>
 
     <div id="vanilla" class="page-section">
-        <div class="tier-columns-container">
-            <div class="tier-box"><div class="tier-title t1-title">🏆 Tier 1</div><div class="tier-players-list"><div class="tier-player-item player-row-item"><div class="player-info"><div class="player-head"></div><div class="player-name">Upcoming</div></div><span class="up-arrow">▲</span></div></div></div>
-            <div class="tier-box"><div class="tier-title t2-title">🥈 Tier 2</div><div class="tier-players-list"><div class="tier-player-item player-row-item"><div class="player-info"><div class="player-head"></div><div class="player-name">SamplePlayer</div></div><span class="up-arrow">▲</span></div></div></div>
-            <div class="tier-box"><div class="tier-title t3-title">🥉 Tier 3</div><div class="tier-players-list"></div></div>
-            <div class="tier-box"><div class="tier-title t4-title">🎖️ Tier 4</div><div class="tier-players-list"></div></div>
-            <div class="tier-box"><div class="tier-title t5-title">💀 Tier 5</div><div class="tier-players-list"></div></div>
-        </div>
+        <div class="tier-vertical-container" id="vanilla-container"></div>
     </div>
 
     <div id="uhc" class="page-section">
-        <div class="tier-columns-container">
-            <div class="tier-box"><div class="tier-title t1-title">🏆 Tier 1</div><div class="tier-players-list"><div class="tier-player-item player-row-item"><div class="player-info"><div class="player-head"></div><div class="player-name">Upcoming</div></div><span class="up-arrow">▲</span></div></div></div>
-            <div class="tier-box"><div class="tier-title t2-title">🥈 Tier 2</div><div class="tier-players-list"></div></div>
-            <div class="tier-box"><div class="tier-title t3-title">🥉 Tier 3</div><div class="tier-players-list"><div class="tier-player-item player-row-item"><div class="player-info"><div class="player-head"></div><div class="player-name">SamplePlayer</div></div><span class="up-arrow">▲</span></div></div></div>
-            <div class="tier-box"><div class="tier-title t4-title">🎖️ Tier 4</div><div class="tier-players-list"></div></div>
-            <div class="tier-box"><div class="tier-title t5-title">💀 Tier 5</div><div class="tier-players-list"></div></div>
-        </div>
+        <div class="tier-vertical-container" id="uhc-container"></div>
     </div>
 
     <div id="pot" class="page-section">
-        <div class="tier-columns-container">
-            <div class="tier-box"><div class="tier-title t1-title">🏆 Tier 1</div><div class="tier-players-list"><div class="tier-player-item player-row-item"><div class="player-info"><div class="player-head"></div><div class="player-name">SamplePlayer</div></div><span class="up-arrow">▲</span></div></div></div>
-            <div class="tier-box"><div class="tier-title t2-title">🥈 Tier 2</div><div class="tier-players-list"><div class="tier-player-item player-row-item"><div class="player-info"><div class="player-head"></div><div class="player-name">Upcoming</div></div><span class="up-arrow">▲</span></div></div></div>
-            <div class="tier-box"><div class="tier-title t3-title">🥉 Tier 3</div><div class="tier-players-list"></div></div>
-            <div class="tier-box"><div class="tier-title t4-title">🎖️ Tier 4</div><div class="tier-players-list"></div></div>
-            <div class="tier-box"><div class="tier-title t5-title">💀 Tier 5</div><div class="tier-players-list"></div></div>
-        </div>
+        <div class="tier-vertical-container" id="pot-container"></div>
     </div>
 
     <div id="sword" class="page-section">
-        <div class="tier-columns-container">
-            <div class="tier-box"><div class="tier-title t1-title">🏆 Tier 1</div><div class="tier-players-list"><div class="tier-player-item player-row-item"><div class="player-info"><div class="player-head"></div><div class="player-name">Upcoming</div></div><span class="up-arrow">▲</span></div></div></div>
-            <div class="tier-box"><div class="tier-title t2-title">🥈 Tier 2</div><div class="tier-players-list"><div class="tier-player-item player-row-item"><div class="player-info"><div class="player-head"></div><div class="player-name">SamplePlayer</div></div><span class="up-arrow">▲</span></div></div></div>
-            <div class="tier-box"><div class="tier-title t3-title">🥉 Tier 3</div><div class="tier-players-list"></div></div>
-            <div class="tier-box"><div class="tier-title t4-title">🎖️ Tier 4</div><div class="tier-players-list"></div></div>
-            <div class="tier-box"><div class="tier-title t5-title">💀 Tier 5</div><div class="tier-players-list"></div></div>
-        </div>
+        <div class="tier-vertical-container" id="sword-container"></div>
     </div>
 
     <div id="axe" class="page-section">
-        <div class="tier-columns-container">
-            <div class="tier-box"><div class="tier-title t1-title">🏆 Tier 1</div><div class="tier-players-list"><div class="tier-player-item player-row-item"><div class="player-info"><div class="player-head"></div><div class="player-name">SamplePlayer</div></div><span class="up-arrow">▲</span></div></div></div>
-            <div class="tier-box"><div class="tier-title t2-title">🥈 Tier 2</div><div class="tier-players-list"></div></div>
-            <div class="tier-box"><div class="tier-title t3-title">🥉 Tier 3</div><div class="tier-players-list"><div class="tier-player-item player-row-item"><div class="player-info"><div class="player-head"></div><div class="player-name">Upcoming</div></div><span class="up-arrow">▲</span></div></div></div>
-            <div class="tier-box"><div class="tier-title t4-title">🎖️ Tier 4</div><div class="tier-players-list"></div></div>
-            <div class="tier-box"><div class="tier-title t5-title">💀 Tier 5</div><div class="tier-players-list"></div></div>
-        </div>
+        <div class="tier-vertical-container" id="axe-container"></div>
     </div>
 
     <div id="netherop" class="page-section">
-        <div class="tier-columns-container">
-            <div class="tier-box"><div class="tier-title t1-title">🏆 Tier 1</div><div class="tier-players-list"><div class="tier-player-item player-row-item"><div class="player-info"><div class="player-head"></div><div class="player-name">Upcoming</div></div><span class="up-arrow">▲</span></div></div></div>
-            <div class="tier-box"><div class="tier-title t2-title">🥈 Tier 2</div><div class="tier-players-list"><div class="tier-player-item player-row-item"><div class="player-info"><div class="player-head"></div><div class="player-name">SamplePlayer</div></div><span class="up-arrow">▲</span></div></div></div>
-            <div class="tier-box"><div class="tier-title t3-title">🥉 Tier 3</div><div class="tier-players-list"></div></div>
-            <div class="tier-box"><div class="tier-title t4-title">🎖️ Tier 4</div><div class="tier-players-list"></div></div>
-            <div class="tier-box"><div class="tier-title t5-title">💀 Tier 5</div><div class="tier-players-list"></div></div>
-        </div>
+        <div class="tier-vertical-container" id="netherop-container"></div>
     </div>
 
     <div id="smp" class="page-section">
-        <div class="tier-columns-container">
-            <div class="tier-box"><div class="tier-title t1-title">🏆 Tier 1</div><div class="tier-players-list"><div class="tier-player-item player-row-item"><div class="player-info"><div class="player-head"></div><div class="player-name">SamplePlayer</div></div><span class="up-arrow">▲</span></div></div></div>
-            <div class="tier-box"><div class="tier-title t2-title">🥈 Tier 2</div><div class="tier-players-list"><div class="tier-player-item player-row-item"><div class="player-info"><div class="player-head"></div><div class="player-name">Upcoming</div></div><span class="up-arrow">▲</span></div></div></div>
-            <div class="tier-box"><div class="tier-title t3-title">🥉 Tier 3</div><div class="tier-players-list"></div></div>
-            <div class="tier-box"><div class="tier-title t4-title">🎖️ Tier 4</div><div class="tier-players-list"></div></div>
-            <div class="tier-box"><div class="tier-title t5-title">💀 Tier 5</div><div class="tier-players-list"></div></div>
-        </div>
+        <div class="tier-vertical-container" id="smp-container"></div>
     </div>
 
     <div id="mace" class="page-section">
-        <div class="tier-columns-container">
-            <div class="tier-box"><div class="tier-title t1-title">🏆 Tier 1</div><div class="tier-players-list"><div class="tier-player-item player-row-item"><div class="player-info"><div class="player-head"></div><div class="player-name">Upcoming</div></div><span class="up-arrow">▲</span></div></div></div>
-            <div class="tier-box"><div class="tier-title t2-title">🥈 Tier 2</div><div class="tier-players-list"></div></div>
-            <div class="tier-box"><div class="tier-title t3-title">🥉 Tier 3</div><div class="tier-players-list"><div class="tier-player-item player-row-item"><div class="player-info"><div class="player-head"></div><div class="player-name">SamplePlayer</div></div><span class="up-arrow">▲</span></div></div></div>
-            <div class="tier-box"><div class="tier-title t4-title">🎖️ Tier 4</div><div class="tier-players-list"></div></div>
-            <div class="tier-box"><div class="tier-title t5-title">💀 Tier 5</div><div class="tier-players-list"></div></div>
-        </div>
+        <div class="tier-vertical-container" id="mace-container"></div>
     </div>
 
     <script>
-        // পেজ সুইচ করার ফাংশন
+        // প্লেয়ার স্লট কনফিগারেশন 
+        const tierConfigs = [
+            { level: 1, title: '🏆 Tier 1', class: 't1-title', count: 5 },
+            { level: 2, title: '🥈 Tier 2', class: 't2-title', count: 10 },
+            { level: 3, title: '🥉 Tier 3', class: 't3-title', count: 30 },
+            { level: 4, title: '🎖️ Tier 4', class: 't4-title', count: 40 },
+            { level: 5, title: '💀 Tier 5', class: 't5-title', count: 50 }
+        ];
+
+        const targetContainers = [
+            'vanilla-container', 'uhc-container', 'pot-container', 
+            'sword-container', 'axe-container', 'netherop-container', 
+            'smp-container', 'mace-container'
+        ];
+
+        // লুপ চালিয়ে ডাইনামিকালি সব স্লট তৈরি করা হচ্ছে
+        targetContainers.forEach(containerId => {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+
+            tierConfigs.forEach(tier => {
+                const tierBox = document.createElement('div');
+                tierBox.className = 'tier-box';
+
+                const tierTitle = document.createElement('div');
+                tierTitle.className = `tier-title ${tier.class}`;
+                tierTitle.innerText = tier.title;
+                tierBox.appendChild(tierTitle);
+
+                const playerList = document.createElement('div');
+                playerList.className = 'tier-players-list';
+
+                for (let i = 1; i <= tier.count; i++) {
+                    const playerItem = document.createElement('div');
+                    playerItem.className = 'tier-player-item player-row-item';
+                    playerItem.innerHTML = `
+                        <div class="player-info">
+                            <div class="player-head"></div>
+                            <div class="player-name">Upcoming</div>
+                        </div>
+                        <span class="up-arrow">▲</span>
+                    `;
+                    playerList.appendChild(playerItem);
+                }
+
+                tierBox.appendChild(playerList);
+                container.appendChild(tierBox);
+            });
+        });
+
+        // পেজ সুইচিং ফাংশন
         function openPage(pageId) {
             var pages = document.getElementsByClassName('page-section');
             for (var i = 0; i < pages.length; i++) {
@@ -493,27 +483,23 @@
                 window.event.currentTarget.classList.add('active');
             }
 
-            // পেজ পরিবর্তনের সাথে সাথে সার্চ ফিল্টার রিসেট বা আপডেট করবে
             liveSearch();
         }
 
-        // লাইভ স্মার্ট সার্চ ফিল্টার
+        // লাইভ সার্চ ফিল্টার
         function liveSearch() {
             var input = document.getElementById('tierSearch');
             var filter = input.value.toUpperCase();
             
-            // বর্তমানে কোন পেজটি একটিভ বা খোলা আছে তা খুঁজে বের করবে
             var activePage = document.querySelector('.page-section.active');
             if (!activePage) return;
 
-            // শুধুমাত্র একটিভ পেজের ভেতরের প্লেয়ার আইটেমগুলোকে ফিল্টার করবে
             var playerRows = activePage.getElementsByClassName('player-row-item');
 
             for (var i = 0; i < playerRows.length; i++) {
                 var nameContainer = playerRows[i].getElementsByClassName('player-name')[0];
                 if (nameContainer) {
                     var nameText = nameContainer.textContent || nameContainer.innerText;
-                    // নাম সার্চের সাথে মিললে দেখাবে, না মিললে হাইড করে দিবে
                     if (nameText.toUpperCase().indexOf(filter) > -1) {
                         playerRows[i].style.display = "";
                     } else {
@@ -525,4 +511,4 @@
     </script>
 
 </body>
-    </html>
+</html>
