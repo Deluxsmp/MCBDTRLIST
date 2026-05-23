@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Combat Tier List - Overall Rankings</title>
+    <title>Combat Tier List</title>
     <style>
-        /* বেসিক রিসেট ও ডার্ক থিম */
+        /* বেসিক থিম ও ডার্ক রিসেট */
         * {
             margin: 0;
             padding: 0;
@@ -16,30 +16,29 @@
         body {
             background-color: #0b0e14;
             color: #c9d1d9;
-            padding: 20px;
+            padding: 15px;
             display: flex;
             flex-direction: column;
             align-items: center;
         }
 
-        /* হেডার সেকশন */
+        /* হেডার */
         header {
             width: 100%;
-            max-width: 1000px;
+            max-width: 1100px;
             text-align: center;
-            margin-bottom: 25px;
-            padding: 20px;
-            background: linear-gradient(135deg, #161b22, #0d1117);
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: #161b22;
             border-radius: 8px;
             border: 1px solid #21262d;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
         }
 
         header h1 {
             font-size: 2.2rem;
             color: #f08a24;
             text-transform: uppercase;
-            letter-spacing: 2px;
+            letter-spacing: 1px;
         }
 
         header p {
@@ -48,73 +47,111 @@
             margin-top: 5px;
         }
 
-        /* মেইন টেবিল কন্টেইনার */
-        .ranking-container {
+        /* নেভিগেশন বাটন গ্রুপ */
+        .nav-container {
+            display: flex;
+            gap: 10px;
             width: 100%;
-            max-width: 1000px;
+            max-width: 1100px;
+            margin-bottom: 25px;
+            overflow-x: auto;
+            padding-bottom: 8px;
+        }
+
+        .nav-container::-webkit-scrollbar {
+            height: 4px;
+        }
+        .nav-container::-webkit-scrollbar-thumb {
+            background-color: #30363d;
+            border-radius: 10px;
+        }
+
+        .nav-btn {
+            background-color: #21262d;
+            color: #c9d1d9;
+            padding: 10px 18px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            border: 1px solid #30363d;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .nav-btn:hover, .nav-btn.active {
+            background-color: #f08a24;
+            color: #0d1117;
+            border-color: #f08a24;
+        }
+
+        /* কমন কন্টেন্ট হোল্ডার */
+        .page-section {
+            display: none; /* প্রথমে সব লুকানো থাকবে, ক্লিক করলে শো হবে */
+            width: 100%;
+            max-width: 1100px;
+        }
+
+        .page-section.active {
+            display: block; /* শুধুমাত্র একটি একটি পেজ দেখাবে */
+        }
+
+        /* -------------------------------------------
+           ১ম পেজ: OVERALL RANKINGS (টেবিল ভিউ)
+        ------------------------------------------- */
+        .overall-table {
+            width: 100%;
             background-color: #161b22;
             border-radius: 8px;
-            border: 1px solid #30363d;
-            overflow-x: auto; /* মোবাইলে স্ক্রল করার সুবিধা */
-            box-shadow: 0 8px 24px rgba(0,0,0,0.4);
-        }
-
-        table {
-            width: 100%;
+            border: 1px solid #21262d;
             border-collapse: collapse;
-            text-align: left;
         }
 
-        th, td {
-            padding: 12px 16px;
+        .overall-table th, .overall-table td {
+            padding: 12px 15px;
             border-bottom: 1px solid #21262d;
+            text-align: left;
             vertical-align: middle;
         }
 
-        th {
+        .overall-table th {
             background-color: #0d1117;
             color: #8b949e;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             text-transform: uppercase;
-            letter-spacing: 1px;
         }
 
-        /* রিলিজ র‍্যাঙ্ক পজিশন কালার (১, ২, ৩ এর জন্য বিশেষ ব্যাকগ্রাউন্ড) */
-        .rank-num {
+        .rank-col {
             font-weight: bold;
             font-style: italic;
-            font-size: 1.1rem;
-            width: 50px;
+            width: 40px;
         }
-        tr:nth-child(1) .rank-num { color: #d4af37; } /* Gold */
-        tr:nth-child(2) .rank-num { color: #c0c0c0; } /* Silver */
-        tr:nth-child(3) .rank-num { color: #cd7f32; } /* Bronze */
+        tr:nth-child(1) .rank-col { color: #d4af37; }
+        tr:nth-child(2) .rank-col { color: #c0c0c0; }
+        tr:nth-child(3) .rank-col { color: #cd7f32; }
 
-        /* প্লেয়ার প্রোফাইল (হেড + নাম) */
-        .player-profile {
+        .player-info {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
         }
 
         .player-head {
-            width: 34px;
-            height: 34px;
-            background-color: #444c56;
-            border: 2px solid #545d68;
+            width: 32px;
+            height: 32px;
+            background-color: #30363d;
+            border: 2px solid #444c56;
             border-radius: 4px;
             position: relative;
             flex-shrink: 0;
         }
-
-        /* ডামি মাইনক্রাফ্ট চোখ */
         .player-head::before, .player-head::after {
-            content: '';
-            position: absolute;
-            width: 4px;
-            height: 4px;
-            background-color: #101419;
-            top: 12px;
+            content: ''; position: absolute; width: 4px; height: 4px;
+            background-color: #0d1117; top: 10px;
         }
         .player-head::before { left: 6px; }
         .player-head::after { right: 6px; }
@@ -122,43 +159,78 @@
         .player-name {
             font-weight: 600;
             color: #f0f6fc;
-            font-size: 1rem;
         }
 
-        /* ব্যাজ কন্টেইনার (সব গেমমোড একসাথে রাখার জন্য) */
-        .badges-container {
+        /* গেমমোড আইকন ব্যাজ স্টাইল (হোম পেজের জন্য) */
+        .mode-badge-group {
             display: flex;
-            gap: 6px;
+            gap: 12px;
             flex-wrap: wrap;
         }
 
-        /* পিভিপি মোড ব্যাজ স্টাইল */
-        .badge {
+        .mode-badge {
             display: inline-flex;
             align-items: center;
-            justify-content: center;
+            gap: 4px;
+            background-color: #21262d;
             padding: 4px 8px;
+            border-radius: 6px;
             font-size: 0.75rem;
             font-weight: bold;
-            border-radius: 12px;
-            text-transform: uppercase;
-            min-width: 42px;
-            box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
+            border: 1px solid #30363d;
         }
 
-        /* আলাদা আলাদা টিয়ারের কালার কোড (আসল সাইটের মতো) */
-        .ht1 { background-color: #d4af37; color: #000; } /* High Tier 1 */
-        .lt1 { background-color: #ffca28; color: #000; } /* Low Tier 1 */
-        .ht2 { background-color: #e0e0e0; color: #000; } /* High Tier 2 */
-        .lt2 { background-color: #b0bec5; color: #000; } /* Low Tier 2 */
-        .ht3 { background-color: #bcaaa4; color: #000; } /* High Tier 3 */
-        .lt3 { background-color: #8d6e63; color: #fff; } /* Low Tier 3 */
-        .ht4 { background-color: #374151; color: #fff; } /* High Tier 4 */
-        .lt4 { background-color: #1f2937; color: #9ca3af; } /* Low Tier 4 */
+        /* -------------------------------------------
+           অন্যান্য পেজ: ৩টি কলাম টিয়ার ভিউ (Vanilla, UHC, Pot, Sword, Axe)
+        ------------------------------------------- */
+        .tier-columns-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            width: 100%;
+        }
 
-        /* হোভার ইফেক্ট */
-        tr:hover {
-            background-color: #1c2128;
+        .tier-box {
+            background-color: #161b22;
+            border-radius: 8px;
+            border: 1px solid #21262d;
+            overflow: hidden;
+        }
+
+        .tier-title {
+            padding: 12px;
+            font-weight: bold;
+            text-align: center;
+            text-transform: uppercase;
+            font-size: 1.1rem;
+        }
+
+        .t1-title { background: linear-gradient(90deg, #d4af37, #aa7c11); color: #000; }
+        .t2-title { background: linear-gradient(90deg, #c0c0c0, #708090); color: #000; }
+        .t3-title { background: linear-gradient(90deg, #cd7f32, #8b4513); color: #fff; }
+
+        .tier-players-list {
+            padding: 10px;
+            max-height: 450px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .tier-player-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #21262d;
+            padding: 8px 12px;
+            border-radius: 6px;
+            border: 1px solid #30363d;
+        }
+
+        .up-arrow {
+            color: #58a6ff;
+            font-size: 0.8rem;
         }
     </style>
 </head>
@@ -166,183 +238,227 @@
 
     <header>
         <h1>Combat Tier List</h1>
-        <p>Minecraft PvP Official Player Rankings • Overall Season</p>
+        <p>Official Player Database & Tier Rankings</p>
     </header>
 
-    <div class="ranking-container">
-        <table>
+    <div class="nav-container">
+        <button class="nav-btn active" onclick="openPage('overall')">📊 Overall</button>
+        <button class="nav-btn" onclick="openPage('vanilla')">🍦 Vanilla</button>
+        <button class="nav-btn" onclick="openPage('uhc')">❤️ UHC</button>
+        <button class="nav-btn" onclick="openPage('pot')">🧪 Pot</button>
+        <button class="nav-btn" onclick="openPage('sword')">⚔️ Sword</button>
+        <button class="nav-btn" onclick="openPage('axe')">🪓 Axe</button>
+    </div>
+
+    <div id="overall" class="page-section active">
+        <table class="overall-table">
             <thead>
                 <tr>
                     <th>#</th>
                     <th>Player</th>
-                    <th>Tiers (Sword / Axe / Pot / Vanilla / UHC / NethOP)</th>
+                    <th>Game Modes & Tiers</th>
                 </tr>
             </thead>
             <tbody>
-                
                 <tr>
-                    <td class="rank-num">1.</td>
+                    <td class="rank-col">1.</td>
                     <td>
-                        <div class="player-profile">
+                        <div class="player-info">
                             <div class="player-head"></div>
                             <div class="player-name">Upcoming</div>
                         </div>
                     </td>
                     <td>
-                        <div class="badges-container">
-                            <span class="badge ht1">HT1</span>
-                            <span class="badge lt1">LT1</span>
-                            <span class="badge ht2">HT2</span>
-                            <span class="badge lt2">LT2</span>
-                            <span class="badge ht3">HT3</span>
-                            <span class="badge lt3">LT3</span>
+                        <div class="mode-badge-group">
+                            <span class="mode-badge">🍦 Vanilla: <b style="color:#d4af37">LT1</b></span>
+                            <span class="mode-badge">❤️ UHC: <b style="color:#ffca28">HT1</b></span>
+                            <span class="mode-badge">🧪 Pot: <b style="color:#e0e0e0">HT2</b></span>
+                            <span class="mode-badge">⚔️ Sword: <b style="color:#d4af37">HT1</b></span>
+                            <span class="mode-badge">🪓 Axe: <b style="color:#bcaaa4">HT3</b></span>
                         </div>
                     </td>
                 </tr>
-
                 <tr>
-                    <td class="rank-num">2.</td>
+                    <td class="rank-col">2.</td>
                     <td>
-                        <div class="player-profile">
+                        <div class="player-info">
                             <div class="player-head"></div>
                             <div class="player-name">Upcoming</div>
                         </div>
                     </td>
                     <td>
-                        <div class="badges-container">
-                            <span class="badge lt1">LT1</span>
-                            <span class="badge lt1">LT1</span>
-                            <span class="badge ht3">HT3</span>
-                            <span class="badge ht1">HT1</span>
-                            <span class="badge lt2">LT2</span>
-                            <span class="badge ht4">HT4</span>
+                        <div class="mode-badge-group">
+                            <span class="mode-badge">🍦 Vanilla: <b style="color:#e0e0e0">HT2</b></span>
+                            <span class="mode-badge">❤️ UHC: <b style="color:#bcaaa4">HT3</b></span>
+                            <span class="mode-badge">🧪 Pot: <b style="color:#ffca28">LT1</b></span>
+                            <span class="mode-badge">⚔️ Sword: <b style="color:#b0bec5">LT2</b></span>
+                            <span class="mode-badge">🪓 Axe: <b style="color:#d4af37">HT1</b></span>
                         </div>
                     </td>
                 </tr>
-
                 <tr>
-                    <td class="rank-num">3.</td>
+                    <td class="rank-col">3.</td>
                     <td>
-                        <div class="player-profile">
+                        <div class="player-info">
                             <div class="player-head"></div>
                             <div class="player-name">Upcoming</div>
                         </div>
                     </td>
                     <td>
-                        <div class="badges-container">
-                            <span class="badge ht3">HT3</span>
-                            <span class="badge ht1">HT1</span>
-                            <span class="badge lt2">LT2</span>
-                            <span class="badge lt1">LT1</span>
-                            <span class="badge ht2">HT2</span>
-                            <span class="badge lt4">LT4</span>
+                        <div class="mode-badge-group">
+                            <span class="mode-badge">🍦 Vanilla: <b style="color:#bcaaa4">HT3</b></span>
+                            <span class="mode-badge">❤️ UHC: <b style="color:#d4af37">LT1</b></span>
+                            <span class="mode-badge">🧪 Pot: <b style="color:#8d6e63">LT3</b></span>
+                            <span class="mode-badge">⚔️ Sword: <b style="color:#e0e0e0">HT2</b></span>
+                            <span class="mode-badge">🪓 Axe: <b style="color:#1f2937">LT4</b></span>
                         </div>
                     </td>
                 </tr>
-
-                <tr>
-                    <td class="rank-num">4.</td>
-                    <td>
-                        <div class="player-profile">
-                            <div class="player-head"></div>
-                            <div class="player-name">Upcoming</div>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="badges-container">
-                            <span class="badge lt2">LT2</span>
-                            <span class="badge ht2">HT2</span>
-                            <span class="badge ht3">HT3</span>
-                            <span class="badge lt3">LT3</span>
-                            <span class="badge ht1">HT1</span>
-                            <span class="badge lt1">LT1</span>
-                        </div>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td class="rank-num">5.</td>
-                    <td>
-                        <div class="player-profile">
-                            <div class="player-head"></div>
-                            <div class="player-name">Upcoming</div>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="badges-container">
-                            <span class="badge ht2">HT2</span>
-                            <span class="badge lt3">LT3</span>
-                            <span class="badge lt1">LT1</span>
-                            <span class="badge ht4">HT4</span>
-                            <span class="badge ht2">HT2</span>
-                            <span class="badge lt2">LT2</span>
-                        </div>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td class="rank-num">6.</td>
-                    <td>
-                        <div class="player-profile">
-                            <div class="player-head"></div>
-                            <div class="player-name">Upcoming</div>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="badges-container">
-                            <span class="badge lt3">LT3</span>
-                            <span class="badge ht3">HT3</span>
-                            <span class="badge lt2">LT2</span>
-                            <span class="badge lt2">LT2</span>
-                            <span class="badge ht1">HT1</span>
-                            <span class="badge ht3">HT3</span>
-                        </div>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td class="rank-num">7.</td>
-                    <td>
-                        <div class="player-profile">
-                            <div class="player-head"></div>
-                            <div class="player-name">Upcoming</div>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="badges-container">
-                            <span class="badge ht4">HT4</span>
-                            <span class="badge lt4">LT4</span>
-                            <span class="badge lt3">LT3</span>
-                            <span class="badge ht1">HT1</span>
-                            <span class="badge ht2">HT2</span>
-                            <span class="badge lt1">LT1</span>
-                        </div>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td class="rank-num">8.</td>
-                    <td>
-                        <div class="player-profile">
-                            <div class="player-head"></div>
-                            <div class="player-name">Upcoming</div>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="badges-container">
-                            <span class="badge lt1">LT1</span>
-                            <span class="badge lt2">LT2</span>
-                            <span class="badge ht3">HT3</span>
-                            <span class="badge lt3">LT3</span>
-                            <span class="badge ht4">HT4</span>
-                            <span class="badge ht1">HT1</span>
-                        </div>
-                    </td>
-                </tr>
-
             </tbody>
         </table>
     </div>
+
+    <div id="vanilla" class="page-section">
+        <div class="tier-columns-container">
+            <div class="tier-box">
+                <div class="tier-title t1-title">🏆 Tier 1</div>
+                <div class="tier-players-list">
+                    <div class="tier-player-item"><div class="player-info"><div class="player-head"></div><div class="player-name">Upcoming</div></div><span class="up-arrow">▲</span></div>
+                    <div class="tier-player-item"><div class="player-info"><div class="player-head"></div><div class="player-name">Upcoming</div></div><span class="up-arrow">▲</span></div>
+                </div>
+            </div>
+            <div class="tier-box">
+                <div class="tier-title t2-title">🥈 Tier 2</div>
+                <div class="tier-players-list">
+                    <div class="tier-player-item"><div class="player-info"><div class="player-head"></div><div class="player-name">Upcoming</div></div><span class="up-arrow">▲</span></div>
+                    <div class="tier-player-item"><div class="player-info"><div class="player-head"></div><div class="player-name">Upcoming</div></div><span class="up-arrow">▲</span></div>
+                </div>
+            </div>
+            <div class="tier-box">
+                <div class="tier-title t3-title">🥉 Tier 3</div>
+                <div class="tier-players-list">
+                    <div class="tier-player-item"><div class="player-info"><div class="player-head"></div><div class="player-name">Upcoming</div></div><span class="up-arrow">▲</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="uhc" class="page-section">
+        <div class="tier-columns-container">
+            <div class="tier-box">
+                <div class="tier-title t1-title">🏆 Tier 1</div>
+                <div class="tier-players-list">
+                    <div class="tier-player-item"><div class="player-info"><div class="player-head"></div><div class="player-name">Upcoming</div></div><span class="up-arrow">▲</span></div>
+                </div>
+            </div>
+            <div class="tier-box">
+                <div class="tier-title t2-title">🥈 Tier 2</div>
+                <div class="tier-players-list">
+                    <div class="tier-player-item"><div class="player-info"><div class="player-head"></div><div class="player-name">Upcoming</div></div><span class="up-arrow">▲</span></div>
+                </div>
+            </div>
+            <div class="tier-box">
+                <div class="tier-title t3-title">🥉 Tier 3</div>
+                <div class="tier-players-list">
+                    <div class="tier-player-item"><div class="player-info"><div class="player-head"></div><div class="player-name">Upcoming</div></div><span class="up-arrow">▲</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="pot" class="page-section">
+        <div class="tier-columns-container">
+            <div class="tier-box">
+                <div class="tier-title t1-title">🏆 Tier 1</div>
+                <div class="tier-players-list">
+                    <div class="tier-player-item"><div class="player-info"><div class="player-head"></div><div class="player-name">Upcoming</div></div><span class="up-arrow">▲</span></div>
+                </div>
+            </div>
+            <div class="tier-box">
+                <div class="tier-title t2-title">🥈 Tier 2</div>
+                <div class="tier-players-list">
+                    <div class="tier-player-item"><div class="player-info"><div class="player-head"></div><div class="player-name">Upcoming</div></div><span class="up-arrow">▲</span></div>
+                </div>
+            </div>
+            <div class="tier-box">
+                <div class="tier-title t3-title">🥉 Tier 3</div>
+                <div class="tier-players-list">
+                    <div class="tier-player-item"><div class="player-info"><div class="player-head"></div><div class="player-name">Upcoming</div></div><span class="up-arrow">▲</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="sword" class="page-section">
+        <div class="tier-columns-container">
+            <div class="tier-box">
+                <div class="tier-title t1-title">🏆 Tier 1</div>
+                <div class="tier-players-list">
+                    <div class="tier-player-item"><div class="player-info"><div class="player-head"></div><div class="player-name">Upcoming</div></div><span class="up-arrow">▲</span></div>
+                </div>
+            </div>
+            <div class="tier-box">
+                <div class="tier-title t2-title">🥈 Tier 2</div>
+                <div class="tier-players-list">
+                    <div class="tier-player-item"><div class="player-info"><div class="player-head"></div><div class="player-name">Upcoming</div></div><span class="up-arrow">▲</span></div>
+                    <div class="tier-player-item"><div class="player-info"><div class="player-head"></div><div class="player-name">Upcoming</div></div><span class="up-arrow">▲</span></div>
+                </div>
+            </div>
+            <div class="tier-box">
+                <div class="tier-title t3-title">🥉 Tier 3</div>
+                <div class="tier-players-list">
+                    <div class="tier-player-item"><div class="player-info"><div class="player-head"></div><div class="player-name">Upcoming</div></div><span class="up-arrow">▲</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="axe" class="page-section">
+        <div class="tier-columns-container">
+            <div class="tier-box">
+                <div class="tier-title t1-title">🏆 Tier 1</div>
+                <div class="tier-players-list">
+                    <div class="tier-player-item"><div class="player-info"><div class="player-head"></div><div class="player-name">Upcoming</div></div><span class="up-arrow">▲</span></div>
+                </div>
+            </div>
+            <div class="tier-box">
+                <div class="tier-title t2-title">🥈 Tier 2</div>
+                <div class="tier-players-list">
+                    <div class="tier-player-item"><div class="player-info"><div class="player-head"></div><div class="player-name">Upcoming</div></div><span class="up-arrow">▲</span></div>
+                </div>
+            </div>
+            <div class="tier-box">
+                <div class="tier-title t3-title">🥉 Tier 3</div>
+                <div class="tier-players-list">
+                    <div class="tier-player-item"><div class="player-info"><div class="player-head"></div><div class="player-name">Upcoming</div></div><span class="up-arrow">▲</span></div>
+                    <div class="tier-player-item"><div class="player-info"><div class="player-head"></div><div class="player-name">Upcoming</div></div><span class="up-arrow">▲</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        function openPage(pageId) {
+            // ১. সব পেজ ভিউ লুকিয়ে ফেলার লুপ
+            var pages = document.getElementsByClassName('page-section');
+            for (var i = 0; i < pages.length; i++) {
+                pages[i].classList.remove('active');
+            }
+
+            // ২. সব বাটন থেকে 'active' স্টাইল রিমুভ করা
+            var buttons = document.getElementsByClassName('nav-btn');
+            for (var j = 0; j < buttons.length; j++) {
+                buttons[j].classList.remove('active');
+            }
+
+            // ৩. ক্লিক করা নির্দিষ্ট পেজটি শো করা
+            document.getElementById(pageId).classList.add('active');
+
+            // ৪. ক্লিক করা বাটনে কালার সেট করা
+            event.currentTarget.classList.add('active');
+        }
+    </script>
 
 </body>
 </html>
