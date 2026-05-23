@@ -91,13 +91,13 @@
 
         /* কমন কন্টেন্ট হোল্ডার */
         .page-section {
-            display: none; /* প্রথমে সব লুকানো থাকবে, ক্লিক করলে শো হবে */
+            display: none;
             width: 100%;
             max-width: 1100px;
         }
 
         .page-section.active {
-            display: block; /* শুধুমাত্র একটি একটি পেজ দেখাবে */
+            display: block;
         }
 
         /* -------------------------------------------
@@ -161,10 +161,10 @@
             color: #f0f6fc;
         }
 
-        /* গেমমোড আইকন ব্যাজ স্টাইল (হোম পেজের জন্য) */
+        /* গেমমোড আইকন ব্যাজ স্টাইল */
         .mode-badge-group {
             display: flex;
-            gap: 12px;
+            gap: 10px;
             flex-wrap: wrap;
         }
 
@@ -181,7 +181,7 @@
         }
 
         /* -------------------------------------------
-           অন্যান্য পেজ: ৩টি কলাম টিয়ার ভিউ (Vanilla, UHC, Pot, Sword, Axe)
+           ৩টি কলাম টিয়ার ভিউ (গেমমোড পেজসমূহ)
         ------------------------------------------- */
         .tier-columns-container {
             display: grid;
@@ -248,6 +248,9 @@
         <button class="nav-btn" onclick="openPage('pot')">🧪 Pot</button>
         <button class="nav-btn" onclick="openPage('sword')">⚔️ Sword</button>
         <button class="nav-btn" onclick="openPage('axe')">🪓 Axe</button>
+        <button class="nav-btn" onclick="openPage('netherop')">👾 NetherOP</button>
+        <button class="nav-btn" onclick="openPage('smp')">🟢 SMP</button>
+        <button class="nav-btn" onclick="openPage('mace')">🔨 Mace</button>
     </div>
 
     <div id="overall" class="page-section active">
@@ -275,6 +278,9 @@
                             <span class="mode-badge">🧪 Pot: <b style="color:#e0e0e0">HT2</b></span>
                             <span class="mode-badge">⚔️ Sword: <b style="color:#d4af37">HT1</b></span>
                             <span class="mode-badge">🪓 Axe: <b style="color:#bcaaa4">HT3</b></span>
+                            <span class="mode-badge">👾 NetherOP: <b style="color:#d4af37">HT1</b></span>
+                            <span class="mode-badge">🟢 SMP: <b style="color:#b0bec5">LT2</b></span>
+                            <span class="mode-badge">🔨 Mace: <b style="color:#ffca28">LT1</b></span>
                         </div>
                     </td>
                 </tr>
@@ -293,24 +299,9 @@
                             <span class="mode-badge">🧪 Pot: <b style="color:#ffca28">LT1</b></span>
                             <span class="mode-badge">⚔️ Sword: <b style="color:#b0bec5">LT2</b></span>
                             <span class="mode-badge">🪓 Axe: <b style="color:#d4af37">HT1</b></span>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="rank-col">3.</td>
-                    <td>
-                        <div class="player-info">
-                            <div class="player-head"></div>
-                            <div class="player-name">Upcoming</div>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="mode-badge-group">
-                            <span class="mode-badge">🍦 Vanilla: <b style="color:#bcaaa4">HT3</b></span>
-                            <span class="mode-badge">❤️ UHC: <b style="color:#d4af37">LT1</b></span>
-                            <span class="mode-badge">🧪 Pot: <b style="color:#8d6e63">LT3</b></span>
-                            <span class="mode-badge">⚔️ Sword: <b style="color:#e0e0e0">HT2</b></span>
-                            <span class="mode-badge">🪓 Axe: <b style="color:#1f2937">LT4</b></span>
+                            <span class="mode-badge">👾 NetherOP: <b style="color:#e0e0e0">HT2</b></span>
+                            <span class="mode-badge">🟢 SMP: <b style="color:#d4af37">LT1</b></span>
+                            <span class="mode-badge">🔨 Mace: <b style="color:#8d6e63">LT3</b></span>
                         </div>
                     </td>
                 </tr>
@@ -324,13 +315,11 @@
                 <div class="tier-title t1-title">🏆 Tier 1</div>
                 <div class="tier-players-list">
                     <div class="tier-player-item"><div class="player-info"><div class="player-head"></div><div class="player-name">Upcoming</div></div><span class="up-arrow">▲</span></div>
-                    <div class="tier-player-item"><div class="player-info"><div class="player-head"></div><div class="player-name">Upcoming</div></div><span class="up-arrow">▲</span></div>
                 </div>
             </div>
             <div class="tier-box">
                 <div class="tier-title t2-title">🥈 Tier 2</div>
                 <div class="tier-players-list">
-                    <div class="tier-player-item"><div class="player-info"><div class="player-head"></div><div class="player-name">Upcoming</div></div><span class="up-arrow">▲</span></div>
                     <div class="tier-player-item"><div class="player-info"><div class="player-head"></div><div class="player-name">Upcoming</div></div><span class="up-arrow">▲</span></div>
                 </div>
             </div>
@@ -401,7 +390,6 @@
                 <div class="tier-title t2-title">🥈 Tier 2</div>
                 <div class="tier-players-list">
                     <div class="tier-player-item"><div class="player-info"><div class="player-head"></div><div class="player-name">Upcoming</div></div><span class="up-arrow">▲</span></div>
-                    <div class="tier-player-item"><div class="player-info"><div class="player-head"></div><div class="player-name">Upcoming</div></div><span class="up-arrow">▲</span></div>
                 </div>
             </div>
             <div class="tier-box">
@@ -431,34 +419,96 @@
                 <div class="tier-title t3-title">🥉 Tier 3</div>
                 <div class="tier-players-list">
                     <div class="tier-player-item"><div class="player-info"><div class="player-head"></div><div class="player-name">Upcoming</div></div><span class="up-arrow">▲</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="netherop" class="page-section">
+        <div class="tier-columns-container">
+            <div class="tier-box">
+                <div class="tier-title t1-title">🏆 Tier 1</div>
+                <div class="tier-players-list">
+                    <div class="tier-player-item"><div class="player-info"><div class="player-head"></div><div class="player-name">Upcoming</div></div><span class="up-arrow">▲</span></div>
+                </div>
+            </div>
+            <div class="tier-box">
+                <div class="tier-title t2-title">🥈 Tier 2</div>
+                <div class="tier-players-list">
+                    <div class="tier-player-item"><div class="player-info"><div class="player-head"></div><div class="player-name">Upcoming</div></div><span class="up-arrow">▲</span></div>
+                </div>
+            </div>
+            <div class="tier-box">
+                <div class="tier-title t3-title">🥉 Tier 3</div>
+                <div class="tier-players-list">
                     <div class="tier-player-item"><div class="player-info"><div class="player-head"></div><div class="player-name">Upcoming</div></div><span class="up-arrow">▲</span></div>
                 </div>
             </div>
         </div>
     </div>
 
+    <div id="smp" class="page-section">
+        <div class="tier-columns-container">
+            <div class="tier-box">
+                <div class="tier-title t1-title">🏆 Tier 1</div>
+                <div class="tier-players-list">
+                    <div class="tier-player-item"><div class="player-info"><div class="player-head"></div><div class="player-name">Upcoming</div></div><span class="up-arrow">▲</span></div>
+                </div>
+            </div>
+            <div class="tier-box">
+                <div class="tier-title t2-title">🥈 Tier 2</div>
+                <div class="tier-players-list">
+                    <div class="tier-player-item"><div class="player-info"><div class="player-head"></div><div class="player-name">Upcoming</div></div><span class="up-arrow">▲</span></div>
+                </div>
+            </div>
+            <div class="tier-box">
+                <div class="tier-title t3-title">🥉 Tier 3</div>
+                <div class="tier-players-list">
+                    <div class="tier-player-item"><div class="player-info"><div class="player-head"></div><div class="player-name">Upcoming</div></div><span class="up-arrow">▲</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="mace" class="page-section">
+        <div class="tier-columns-container">
+            <div class="tier-box">
+                <div class="tier-title t1-title">🏆 Tier 1</div>
+                <div class="tier-players-list">
+                    <div class="tier-player-item"><div class="player-info"><div class="player-head"></div><div class="player-name">Upcoming</div></div><span class="up-arrow">▲</span></div>
+                </div>
+            </div>
+            <div class="tier-box">
+                <div class="tier-title t2-title">🥈 Tier 2</div>
+                <div class="tier-players-list">
+                    <div class="tier-player-item"><div class="player-info"><div class="player-head"></div><div class="player-name">Upcoming</div></div><span class="up-arrow">▲</span></div>
+                </div>
+            </div>
+            <div class="tier-box">
+                <div class="tier-title t3-title">🥉 Tier 3</div>
+                <div class="tier-players-list">
+                    <div class="tier-player-item"><div class="player-info"><div class="player-head"></div><div class="player-name">Upcoming</div></div><span class="up-arrow">▲</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script>
         function openPage(pageId) {
-            // ১. সব পেজ ভিউ লুকিয়ে ফেলার লুপ
             var pages = document.getElementsByClassName('page-section');
             for (var i = 0; i < pages.length; i++) {
                 pages[i].classList.remove('active');
             }
 
-            // ২. সব বাটন থেকে 'active' স্টাইল রিমুভ করা
             var buttons = document.getElementsByClassName('nav-btn');
             for (var j = 0; j < buttons.length; j++) {
                 buttons[j].classList.remove('active');
             }
 
-            // ৩. ক্লিক করা নির্দিষ্ট পেজটি শো করা
             document.getElementById(pageId).classList.add('active');
-
-            // ৪. ক্লিক করা বাটনে কালার সেট করা
             event.currentTarget.classList.add('active');
         }
     </script>
 
 </body>
-</html>
+                                                                                                                                                           </html>
