@@ -136,7 +136,7 @@
             border-color: #f08a24;
         }
 
-        /* কমন কন্টেন্ট হোল্ডার */
+        /* কমন কন্টেন্ট হোলルダー */
         .page-section {
             display: none;
             width: 100%;
@@ -228,20 +228,36 @@
         }
 
         /* -------------------------------------------
-           ৫টি কলাম টিয়ার ভিউ (গেমমোড পেজসমূহ)
+           ৫টি কলাম টিয়ার ভিউ (সব এক লাইনে পাশাপাশি থাকবে)
         ------------------------------------------- */
         .tier-columns-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 15px;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap; /* কোনো টায়ার নিচে নামবে না */
+            gap: 12px;
             width: 100%;
+            overflow-x: auto; /* স্ক্রিন ছোট হলে পাশাপাশি স্ক্রোল হবে */
+            padding-bottom: 10px;
+        }
+
+        /* স্ক্রোলবার স্টাইল */
+        .tier-columns-container::-webkit-scrollbar {
+            height: 6px;
+        }
+        .tier-columns-container::-webkit-scrollbar-thumb {
+            background-color: #30363d;
+            border-radius: 10px;
         }
 
         .tier-box {
+            flex: 1;
+            min-width: 200px; /* প্রতিটি বক্সের মিনিমাম চওড়া */
             background-color: #161b22;
             border-radius: 8px;
             border: 1px solid #21262d;
             overflow: hidden;
+            display: flex;
+            flex-direction: column;
         }
 
         .tier-title {
@@ -249,7 +265,7 @@
             font-weight: bold;
             text-align: center;
             text-transform: uppercase;
-            font-size: 1rem;
+            font-size: 0.95rem;
         }
 
         .t1-title { background: linear-gradient(90deg, #d4af37, #aa7c11); color: #000; }
@@ -265,6 +281,7 @@
             display: flex;
             flex-direction: column;
             gap: 6px;
+            flex-grow: 1;
         }
 
         .tier-player-item {
