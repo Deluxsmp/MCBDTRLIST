@@ -178,11 +178,14 @@
         tr:nth-child(2) .rank-col { color: #c0c0c0; }
         tr:nth-child(3) .rank-col { color: #cd7f32; }
 
-        .player-info {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
+        /* প্লেয়ারের নতুন স্টাইল */
+       .player-container { display: flex; align-items: center; gap: 10px; }
+       .player-skin { width: 45px; height: 45px; border-radius: 6px; object-fit: cover; }
+       .player-details { display: flex; flex-direction: column; }
+       .player-name { font-weight: bold; font-size: 1.1rem; color: #fff; }
+       .rank-desc { font-size: 0.8rem; color: #8b949e; display: flex; align-items: center; gap: 4px; }
+       .region-badge { background: #3e2626; color: #ff8888; padding: 2px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: bold; }
+        
 
         .player-head {
             width: 24px;
