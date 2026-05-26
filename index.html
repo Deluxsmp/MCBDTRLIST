@@ -190,8 +190,8 @@
        .rank-desc { 
     font-size: 0.8rem; 
     color: #8b949e; 
-    display: block; /* আগে flex ছিল, এখন block করুন */
-    margin-top: 2px; /* নাম থেকে একটু নিচে নামানোর জন্য */
+    display: block; /* নাম ও পয়েন্টকে আলাদা লাইনে রাখতে */
+    margin-top: 2px; 
        }
        .region-badge { background: #3e2626; color: #ff8888; padding: 2px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: bold; }
         
@@ -380,16 +380,14 @@
                 </tr>
             </thead>
             <tbody>
-                
                 <tr class="player-row-item">
     <td class="rank-col">1.</td>
     <td>
         <div class="player-container">
-            <div style="display: flex; align-items: center;">
             <img src="https://www.clipartmax.com/png/middle/218-2187666_file-steve-minecraft-steve.png" class="player-skin">
-            <div class="player-text-group">
+            <div class="player-details">
                 <span class="player-name">ItzRealMe</span>
-                <span class="player-rank-desc">✨ Combat Master (330 points)</span>
+                <span class="rank-desc">✨ Combat Master (330 points)</span>
             </div>
             <span class="region-badge">NA</span>
         </div>
@@ -399,6 +397,8 @@
             <span class="mode-badge">👾 NetherOP: <b style="color:#d4af37">HT5</b></span>
         </div>
     </td>
+
+                    
                 </tr>
                 <tr class="player-row-item">
                     <td class="rank-col">1.</td>
