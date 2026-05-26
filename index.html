@@ -181,9 +181,18 @@
         /* প্লেয়ারের নতুন স্টাইল */
        .player-container { display: flex; align-items: center; gap: 10px; }
        .player-skin { width: 40px; height: 40px; border-radius: 4px; object-fit: cover;  margin-right: 10px;  vertical-align: middle; }
-       .player-details { display: flex; flex-direction: column; }
-       .player-name { font-weight: bold; font-size: 1.1rem; color: #fff; }
-       .rank-desc { font-size: 0.8rem; color: #8b949e; display: flex; align-items: center; gap: 4px; }
+       .player-details { 
+    display: flex; 
+    flex-direction: column; /* এটি নাম ও পয়েন্টকে একটার নিচে একটা বসাবে */
+    margin-left: 10px; 
+}
+       .player-name { font-weight: bold; }
+       .rank-desc { 
+    font-size: 0.8rem; 
+    color: #8b949e; 
+    display: block; /* আগে flex ছিল, এখন block করুন */
+    margin-top: 2px; /* নাম থেকে একটু নিচে নামানোর জন্য */
+       }
        .region-badge { background: #3e2626; color: #ff8888; padding: 2px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: bold; }
         
 
