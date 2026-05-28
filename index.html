@@ -180,7 +180,13 @@
 
         /* প্লেয়ারের নতুন স্টাইল */
        .player-container { display: flex; align-items: center; gap: 10px; }
-       .player-skin { width: 40px; height: 40px; border-radius: 4px; object-fit: cover;  margin-right: 10px;  vertical-align: middle; background: transparent;}
+       .player-skin {
+    width: 32px;      /* আপনার পছন্দমতো সাইজ */
+    height: 32px;
+    border-radius: 4px;
+    border: 2px solid #444c56; /* বর্ডার স্টাইল */
+    object-fit: cover;
+       }
        .player-details { 
     display: flex; 
     flex-direction: column; /* এটি নাম ও পয়েন্টকে একটার নিচে একটা বসাবে */
@@ -384,7 +390,7 @@
     <td class="rank-col">1.</td>
     <td>
         <div class="player-container">
-            <img src="https://i.postimg.cc/K8VRSx6V/IMG-20260526-203430.png" class="player-skin">
+            <img src="https://mc-heads.net/avatar/DrDonutt/40" class="player-skin" alt="skin">
             <div class="player-details">
                 <span class="player-name">yes</span>
                 <span class="rank-desc">Combat points (330) </span>
@@ -898,6 +904,28 @@
                 }
             }
         }
+
+        window.onload = function() {
+    var players = document.querySelectorAll('.player-name');
+    players.forEach(function(player) {
+        var name = player.innerText.trim();
+        // এটি আপনার আগের .player-head বা .player-skin কে টার্গেট করবে
+        var parent = player.closest('.player-row-item');
+        var skinImg = parent.querySelector('.player-skin') || parent.querySelector('.player-head');
+        
+        if (skinImg) {
+            // যদি আগে div থাকে, তাকে img তে রূপান্তর করা
+            if (skinImg.classList.contains('player-head')) {
+                var newImg = document.createElement('img');
+                newImg.src = "https://mc-heads.net/avatar/" + name + "/40";
+                newImg.className = "player-skin";
+                skinImg.replaceWith(newImg);
+            } else {
+                skinImg.src = "https://mc-heads.net/avatar/" + name + "/40";
+            }
+        }
+    });
+};
     </script>
 </body>
                                                                                                                                                                                                             </html>
