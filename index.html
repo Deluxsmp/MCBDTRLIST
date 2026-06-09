@@ -360,17 +360,20 @@ header {
 </head>
 <body>
 
-    <header>
+<header>
+    <div>
         <h1>Combat Tier List</h1>
-        <p></p>
+    </div>
+    
+    <div class="header-actions">
         <a href="https://discord.gg/zHmRdQ9FES" target="_blank" class="discord-btn">
             💬 Discord
         </a>
-    </header>
-
-    <div class="search-container">
-        <input type="text" id="tierSearch" class="search-input" placeholder="🔍 পেজে থাকা প্লেয়ারের নাম লিখে সার্চ করুন..." onkeyup="liveSearch()">
+        <div class="search-container">
+            <input type="text" id="tierSearch" class="search-input" placeholder="Search player..." onkeyup="liveSearch()">
+        </div>
     </div>
+</header>
 
     <div class="nav-container">
         <button class="nav-btn active" onclick="openPage('overall')"><img src="https://i.postimg.cc/LXYH1wdr/lv-0-20260609200956.png" class="nav-icon"> Overall</button>
