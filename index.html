@@ -76,24 +76,23 @@ header {
         }
 
         /* সার্চ কন্টেইনার */
-        .search-container {
-            width: 100%;
-            max-width: 1200px;
-            margin-bottom: 20px;
-        }
+.search-container {
+    position: absolute;
+    top: 25px; /* হেডারের সাথে সামঞ্জস্য রেখে */
+    right: 20px;
+    width: 250px; /* সার্চ বার ছোট করা হলো */
+}
 
-        .search-input {
-            width: 100%;
-            padding: 12px 16px;
-            background-color: #161b22;
-            border: 1px solid #30363d;
-            border-radius: 6px;
-            color: #ffffff;
-            font-size: 1rem;
-            outline: none;
-            transition: border-color 0.2s;
-        }
-
+.search-input {
+    width: 100%;
+    padding: 8px 12px;
+    background-color: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 6px;
+    color: #ffffff;
+    font-size: 0.9rem;
+    outline: none;
+}
         .search-input:focus {
             border-color: #f08a24;
         }
