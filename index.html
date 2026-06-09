@@ -190,7 +190,24 @@ header {
 .player-name { font-weight: bold; color: #f0f6fc; font-size: 1rem; }
 .rank-desc { font-size: 0.8rem; color: #8b949e; }
 
-.region-badge { background: #3d2626; color: #ff8888; padding: 2px 6px; border-radius: 4px; font-size: 0.75rem; font-weight: bold; }
+/* প্লেয়ার এবং রিজিয়ন ব্যাজকে পাশাপাশি রাখার জন্য */
+.player-row-item .player-container { 
+    display: flex; 
+    align-items: center; 
+    gap: 12px; 
+}
+
+/* রিজিয়ন ব্যাজের স্টাইল */
+.region-badge { 
+    background: #3d2626; 
+    color: #ff8888; 
+    padding: 2px 6px; 
+    border-radius: 4px; 
+    font-size: 0.70rem; 
+    font-weight: bold; 
+    border: 1px solid #5a3a3a;
+    margin-left: 8px; /* নামের সাথে দূরত্ব */
+}
 
 /* টিয়ার সেকশনের জন্য নতুন স্টাইল */
 .tiers-container { display: flex; gap: 8px; align-items: center; }
