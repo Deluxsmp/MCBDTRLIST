@@ -53,27 +53,38 @@ header {
             margin-top: 5px;
         }
 
-        .discord-btn {
-            position: absolute;
-            top: 22px;
-            right: 20px;
-            background-color: #5865F2;
-            color: #ffffff;
-            text-decoration: none;
-            padding: 8px 16px;
-            border-radius: 6px;
-            font-weight: bold;
-            font-size: 0.85rem;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            transition: background-color 0.2s;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
-        }
+        /* শুধু ডিসকর্ড বাটনের জন্য নতুন স্টাইল */
+.discord-container {
+    position: absolute;
+    top: 70px; /* সার্চ বার থেকে নিচে নামানোর জন্য */
+    right: 20px;
+    width: 200px;
+}
 
-        .discord-btn:hover {
-            background-color: #4752C4;
-        }
+.discord-btn {
+    display: block;
+    background-color: #5865F2;
+    color: #ffffff;
+    text-decoration: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: 0.85rem;
+    text-align: center;
+    transition: background-color 0.2s;
+}
+
+/* মোবাইলের জন্য */
+@media (max-width: 650px) {
+    .discord-container {
+        position: relative;
+        top: 0;
+        right: 0;
+        width: 100%;
+        margin-top: 10px;
+        margin-bottom: 20px;
+    }
+}
 
         /* সার্চ কন্টেইনার */
 .search-container {
