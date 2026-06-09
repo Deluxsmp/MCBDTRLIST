@@ -53,45 +53,39 @@ header {
             margin-top: 5px;
         }
 
-        /* শুধু ডিসকর্ড বাটনের জন্য নতুন স্টাইল */
-.discord-container {
+/* সার্চ এবং বাটনকে পাশাপাশি রাখার কন্টেইনার */
+.top-action-wrapper {
     position: absolute;
-    top: 70px; /* সার্চ বার থেকে নিচে নামানোর জন্য */
+    top: 25px; /* আপনার হেডারের সাথে মিলিয়ে নেবেন */
     right: 20px;
-    width: 200px;
+    display: flex;
+    align-items: center; /* বাটন ও ইনপুটকে একই লাইনে রাখবে */
+    gap: 15px; /* দুটির মাঝখানে কিছুটা ফাঁকা জায়গা */
 }
 
+/* ডিসকর্ড বাটনের ডিজাইন */
 .discord-btn {
-    display: block;
-    background-color: #5865F2;
-    color: #ffffff;
-    text-decoration: none;
-    padding: 8px 16px;
+    background-color: #161b22;
+    border: 1px solid #30363d;
+    color: #c9d1d9;
+    padding: 8px 15px;
     border-radius: 6px;
-    font-weight: bold;
-    font-size: 0.85rem;
-    text-align: center;
-    transition: background-color 0.2s;
+    text-decoration: none;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: 0.2s;
 }
 
-/* মোবাইলের জন্য */
-@media (max-width: 650px) {
-    .discord-container {
-        position: relative;
-        top: 0;
-        right: 0;
-        width: 100%;
-        margin-top: 10px;
-        margin-bottom: 20px;
-    }
+.discord-btn:hover {
+    border-color: #f08a24;
+    color: #f0f6fc;
 }
 
-        /* সার্চ কন্টেইনার */
+/* সার্চ কন্টেইনারের সাইজ ঠিক রাখা */
 .search-container {
-    position: absolute;
-    top: 25px; /* হেডারের সাথে সামঞ্জস্য রেখে */
-    right: 20px;
-    width: 250px; /* সার্চ বার ছোট করা হলো */
+    width: 250px; /* আপনার পছন্দমতো সাইজ */
 }
 
 .search-input {
@@ -102,11 +96,7 @@ header {
     border-radius: 6px;
     color: #ffffff;
     font-size: 0.9rem;
-    outline: none;
 }
-        .search-input:focus {
-            border-color: #f08a24;
-        }
 
         /* নেভিগেশন বাটন গ্রুপ */
         .nav-container {
