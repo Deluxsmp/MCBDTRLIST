@@ -183,30 +183,21 @@ header {
         tr:nth-child(2) .rank-col { color: #c0c0c0; }
         tr:nth-child(3) .rank-col { color: #cd7f32; }
 
-        /* প্লেয়ারের নতুন স্টাইল */
-       .player-container { display: flex; align-items: center; gap: 10px; }
-       .player-skin {
-    width: 32px;      /* আপনার পছন্দমতো সাইজ */
-    height: 32px;
-    border-radius: 4px;
-    border: 2px solid #444c56; /* বর্ডার স্টাইল */
-    object-fit: cover;
-       }
-       .player-details { 
-    display: flex; 
-    flex-direction: column; /* এটি নাম ও পয়েন্টকে একটার নিচে একটা বসাবে */
-    margin-left: 10px; 
-}
-       .player-name { font-weight: bold; }
-       .rank-desc { 
-    font-size: 0.8rem; 
-    color: #8b949e; 
-    display: block; /* নাম ও পয়েন্টকে আলাদা লাইনে রাখতে */
-    margin-top: 2px; 
-       }
-       .region-badge { background: #3e2626; color: #ff8888; padding: 2px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: bold; }
-        
+     /* নতুন প্লেয়ার স্টাইল */
+.player-container { display: flex; align-items: center; gap: 12px; }
+.player-skin { width: 45px; height: 45px; border-radius: 6px; object-fit: cover; border: 2px solid #30363d; }
+.player-details { display: flex; flex-direction: column; }
+.player-name { font-weight: bold; color: #f0f6fc; font-size: 1rem; }
+.rank-desc { font-size: 0.8rem; color: #8b949e; }
 
+.region-badge { background: #3d2626; color: #ff8888; padding: 2px 6px; border-radius: 4px; font-size: 0.75rem; font-weight: bold; }
+
+/* টিয়ার সেকশনের জন্য নতুন স্টাইল */
+.tiers-container { display: flex; gap: 8px; align-items: center; }
+.tier-item { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+.tier-icon { width: 22px; height: 22px; object-fit: contain; }
+.tier-label { font-size: 0.7rem; font-weight: bold; }
+        
         .player-head {
             width: 24px;
             height: 24px;
