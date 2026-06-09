@@ -21,12 +21,6 @@
             flex-direction: column;
             align-items: center;
         }
-        .nav-icon {
-    width: 20px;
-    height: 20px;
-    object-fit: contain;
-    vertical-align: middle;
-        }
 
         /* হেডার ও ডিসকورد পজিশন */
         header {
@@ -118,7 +112,27 @@
             border-radius: 10px;
         }
 
-                border-color: #f08a24;
+        .nav-btn {
+            background-color: #21262d;
+            color: #c9d1d9;
+            padding: 10px 18px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            border: 1px solid #30363d;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .nav-btn:hover, .nav-btn.active {
+            background-color: #f08a24;
+            color: #0d1117;
+            border-color: #f08a24;
         }
 
         /* কমন কন্টেন্ট হোল্ডার */
@@ -227,6 +241,13 @@
             font-size: 0.75rem;
             font-weight: bold;
             border: 1px solid #30363d;
+        }
+
+        .nav-icon {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+    vertical-align: middle;
         }
 
         /* MCTIERS এর মতো পাশাপাশি (Horizontal) গ্রিড লেআউট */
@@ -346,23 +367,21 @@
         <input type="text" id="tierSearch" class="search-input" placeholder="🔍 পেজে থাকা প্লেয়ারের নাম লিখে সার্চ করুন..." onkeyup="liveSearch()">
     </div>
 
-    
-<div class="nav-container">
-    <button class="nav-btn active" onclick="openPage('overall')"><img src="https://i.postimg.cc/LXYH1wdr/lv-0-20260609200956.png" class="nav-icon"><span>Overall</span></button>
-    <button class="nav-btn" onclick="openPage('vanilla')"><img src="https://i.postimg.cc/1z7Vz09Q/56536.png" class="nav-icon"><span>Crystal</span></button>
-    <button class="nav-btn" onclick="openPage('uhc')"><img src="https://i.postimg.cc/t4W9vK6J/56537.png" class="nav-icon"><span>UHC</span></button>
-    <button class="nav-btn" onclick="openPage('pot')"><img src="https://i.postimg.cc/d16VwQxT/56538.png" class="nav-icon"><span>Pot</span></button>
-    <button class="nav-btn" onclick="openPage('sword')"><img src="https://i.postimg.cc/26L1ZJ4p/56539.png" class="nav-icon"><span>Sword</span></button>
-    <button class="nav-btn" onclick="openPage('axe')"><img src="https://i.postimg.cc/tT16N4J1/56540.png" class="nav-icon"><span>Axe</span></button>
-    <button class="nav-btn" onclick="openPage('netherop')"><img src="https://i.postimg.cc/52jB9X4W/56541.png" class="nav-icon"><span>NetherOP</span></button>
-    <button class="nav-btn" onclick="openPage('smp')"><img src="https://i.postimg.cc/j5G4H4QG/56546.png" class="nav-icon"><span>SMP</span></button>
-    <button class="nav-btn" onclick="openPage('mace')"><img src="https://i.postimg.cc/LXYH1wdr/lv-0-20260609200956.png" class="nav-icon"><span>Mace</span></button>
-    <button class="nav-btn" onclick="openPage('tank')"><img src="https://i.postimg.cc/LXYH1wdr/lv-0-20260609200956.png" class="nav-icon"><span>Tank</span></button>
-    <button class="nav-btn" onclick="openPage('manhunt')"><img src="https://i.postimg.cc/LXYH1wdr/lv-0-20260609200956.png" class="nav-icon"><span>Manhunt</span></button>
-    <button class="nav-btn" onclick="openPage('spear')"><img src="https://i.postimg.cc/LXYH1wdr/lv-0-20260609200956.png" class="nav-icon"><span>Spear</span></button>
-</div>
-    
-        
+    <div class="nav-container">
+        <button class="nav-btn active" onclick="openPage('overall')">📊 Overall</button>
+        <button class="nav-btn" onclick="openPage('vanilla')">🔮 Crystal</button>
+        <button class="nav-btn" onclick="openPage('uhc')">❤️ UHC</button>
+        <button class="nav-btn" onclick="openPage('pot')">🧪 Pot</button>
+        <button class="nav-btn" onclick="openPage('sword')">⚔️ Sword</button>
+        <button class="nav-btn" onclick="openPage('axe')">🪓 Axe</button>
+        <button class="nav-btn" onclick="openPage('netherop')">👾 NetherOP</button>
+        <button class="nav-btn" onclick="openPage('smp')">🟢 SMP</button>
+        <button class="nav-btn" onclick="openPage('mace')">🔨 Mace</button>
+        <button class="nav-btn" onclick="openPage('tank')">🛡️ Tank</button>
+        <button class="nav-btn" onclick="openPage('manhunt')">🏃‍♂️Manhunt</button>
+        <button class="nav-btn" onclick="openPage('spear')">🪵Spear</button>
+    </div>
+
     <div id="overall" class="page-section active">
         <table class="overall-table">
             <thead>
