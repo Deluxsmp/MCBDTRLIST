@@ -148,11 +148,21 @@ header {
             gap: 6px;
         }
 
-        .nav-btn:hover, .nav-btn.active {
-            background-color: #f08a24;
-            color: #0d1117;
-            border-color: #f08a24;
-        }
+        /* বাটন হোভার স্টাইল */
+.nav-btn:hover {
+    background-color: #f08a24;
+    color: #0d1117;
+    border-color: #f08a24;
+}
+
+/* বাটন এক্টিভ স্টাইল (এখানেই পরিবর্তন করা হয়েছে) */
+.nav-btn.active {
+     
+    color: #ffffff !important;                /* টেক্সট সাদা করা হয়েছে */
+    border: none !important;                  /* বর্ডার মুছে ফেলা হয়েছে */
+    border-bottom: 2px solid #ffffff !important; /* নিচে সাদা লাইন যোগ করা হয়েছে */
+    border-radius: 0 !important;              /* কর্নার রাউন্ড বন্ধ করা হয়েছে */
+}
 
         /* কমন কন্টেন্ট হোল্ডার */
         .page-section {
