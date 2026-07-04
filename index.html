@@ -142,7 +142,8 @@ header {
             border: none;
             cursor: pointer;
             white-space: nowrap;
-            transition: all 0.2s;
+            transition: all 0.3s ease;
+            position: relative;
             display: flex;
             align-items: center;
             gap: 6px;
@@ -152,16 +153,18 @@ header {
 .nav-btn:hover {
     
     color: #f0f6fc;
+    transform: translateY(-2px);
     
 }
 
 /* বাটন এক্টিভ স্টাইল (এখানেই পরিবর্তন করা হয়েছে) */
 .nav-btn.active {
     background-color: transparent 
-    color: #ffffff !important;                /* টেক্সট সাদা করা হয়েছে */
-    border: none !important;                  /* বর্ডার মুছে ফেলা হয়েছে */
-    border-bottom: 2px solid #ffffff !important; /* নিচে সাদা লাইন যোগ করা হয়েছে */
-    border-radius: 0 !important;              /* কর্নার রাউন্ড বন্ধ করা হয়েছে */
+    color: #ffffff;                /* টেক্সট সাদা করা হয়েছে */
+    border: none;                  /* বর্ডার মুছে ফেলা হয়েছে */
+    border-bottom: 2px solid #ffffff; /* নিচে সাদা লাইন যোগ করা হয়েছে */
+    border-radius: 0;          
+    transition: border-bottom 0.3s ease;
 }
 
         /* কমন কন্টেন্ট হোল্ডার */
@@ -377,6 +380,16 @@ header {
             font-size: 0.75rem;
             opacity: 0.5;
         }
+        /* পেজ পরিবর্তনের এনিমেশন */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.page-section.active {
+    display: block;
+    animation: fadeIn 0.4s ease-out;
+}
 
         @media (max-width: 650px) {
             header {
