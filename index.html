@@ -158,12 +158,13 @@ header {
 }
 
 /* বাটন এক্টিভ স্টাইল (এখানেই পরিবর্তন করা হয়েছে) */
+/* বাটন এক্টিভ স্টাইল */
 .nav-btn.active {
-    background-color: transparent 
-    color: #ffffff;                /* টেক্সট সাদা করা হয়েছে */
-    border: none;                  /* বর্ডার মুছে ফেলা হয়েছে */
-    border-bottom: 2px solid #ffffff; /* নিচে সাদা লাইন যোগ করা হয়েছে */
-    border-radius: 0;          
+    background-color: transparent;
+    color: #ffffff !important;                
+    border: none !important;                  
+    border-bottom: 2px solid #ffffff !important; /* এখানে #ffffff এর বদলে #f08a24 দিলে হলুদ হবে */
+    border-radius: 0 !important;    
     transition: border-bottom 0.3s ease;
 }
 
