@@ -85,6 +85,10 @@ header {
             margin-top: 5px;
         }
 
+        .header-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
 /* সার্চ এবং বাটনকে পাশাপাশি রাখার কন্টেইনার */
 .top-action-wrapper {
     position: absolute;
@@ -95,34 +99,30 @@ header {
     gap: 15px; /* দুটির মাঝখানে কিছুটা ফাঁকা জায়গা */
 }
 
-/* ডিসকর্ড বাটনের ডিজাইন */
-/* ডিসকর্ড বাটন স্টাইল */
 .discord-btn {
-    background: #5865F2; /* ডিসকর্ড কালার */
+    white-space: nowrap; /* বাটন যাতে ছোট না হয়ে যায় */
+    background: #5865F2;
     color: #fff;
-    padding: 10px 18px;
-    border-radius: 8px;
+    padding: 8px 15px;
+    border-radius: 6px;
     text-decoration: none;
-    font-weight: bold;
-    font-size: 0.9rem;
-    transition: 0.3s;
-    border: none;
 }
 
-.discord-btn:hover {
-    background: #4752C4;
-    transform: scale(1.05);
-}
-
-/* সার্চ ইনপুট স্টাইল */
 .search-input {
-    padding: 10px 15px;
-    background: #0d1117;
+    width: 200px;
+    padding: 8px;
+    border-radius: 6px;
     border: 1px solid #30363d;
-    border-radius: 8px;
-    color: #fff;
-    width: 220px;
-    transition: 0.3s;
+    background: #0d1117;
+    color: white;
+}
+
+/* মোবাইলের জন্য রেসপনসিভ সেটআপ */
+@media (max-width: 600px) {
+    header {
+        flex-direction: column;
+        gap: 15px;
+    }
 }
 
 .search-input:focus {
