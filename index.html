@@ -85,10 +85,6 @@ header {
             margin-top: 5px;
         }
 
-        .header-actions {
-    display: flex;
-    align-items: center;
-    gap: 10px;
 /* সার্চ এবং বাটনকে পাশাপাশি রাখার কন্টেইনার */
 .top-action-wrapper {
     position: absolute;
@@ -99,36 +95,39 @@ header {
     gap: 15px; /* দুটির মাঝখানে কিছুটা ফাঁকা জায়গা */
 }
 
+/* ডিসকর্ড বাটনের ডিজাইন */
 .discord-btn {
-    white-space: nowrap; /* বাটন যাতে ছোট না হয়ে যায় */
-    background: #5865F2;
-    color: #fff;
+    background-color: #161b22;
+    border: 1px solid #30363d;
+    color: #c9d1d9;
     padding: 8px 15px;
     border-radius: 6px;
     text-decoration: none;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: 0.2s;
+}
+
+.discord-btn:hover {
+    border-color: #f08a24;
+    color: #f0f6fc;
+}
+
+/* সার্চ কন্টেইনারের সাইজ ঠিক রাখা */
+.search-container {
+    width: 250px; /* আপনার পছন্দমতো সাইজ */
 }
 
 .search-input {
-    width: 200px;
-    padding: 8px;
-    border-radius: 6px;
+    width: 100%;
+    padding: 8px 12px;
+    background-color: #161b22;
     border: 1px solid #30363d;
-    background: #0d1117;
-    color: white;
-}
-
-/* মোবাইলের জন্য রেসপনসিভ সেটআপ */
-@media (max-width: 600px) {
-    header {
-        flex-direction: column;
-        gap: 15px;
-    }
-}
-
-.search-input:focus {
-    border-color: #f08a24;
-    outline: none;
-    box-shadow: 0 0 5px rgba(240, 138, 36, 0.5);
+    border-radius: 6px;
+    color: #ffffff;
+    font-size: 0.9rem;
 }
 
         /* নেভিগেশন বাটন গ্রুপ */
