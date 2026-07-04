@@ -96,38 +96,39 @@ header {
 }
 
 /* ডিসকর্ড বাটনের ডিজাইন */
+/* ডিসকর্ড বাটন স্টাইল */
 .discord-btn {
-    background-color: #161b22;
-    border: 1px solid #30363d;
-    color: #c9d1d9;
-    padding: 8px 15px;
-    border-radius: 6px;
+    background: #5865F2; /* ডিসকর্ড কালার */
+    color: #fff;
+    padding: 10px 18px;
+    border-radius: 8px;
     text-decoration: none;
+    font-weight: bold;
     font-size: 0.9rem;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    transition: 0.2s;
+    transition: 0.3s;
+    border: none;
 }
 
 .discord-btn:hover {
-    border-color: #f08a24;
-    color: #f0f6fc;
+    background: #4752C4;
+    transform: scale(1.05);
 }
 
-/* সার্চ কন্টেইনারের সাইজ ঠিক রাখা */
-.search-container {
-    width: 250px; /* আপনার পছন্দমতো সাইজ */
-}
-
+/* সার্চ ইনপুট স্টাইল */
 .search-input {
-    width: 100%;
-    padding: 8px 12px;
-    background-color: #161b22;
+    padding: 10px 15px;
+    background: #0d1117;
     border: 1px solid #30363d;
-    border-radius: 6px;
-    color: #ffffff;
-    font-size: 0.9rem;
+    border-radius: 8px;
+    color: #fff;
+    width: 220px;
+    transition: 0.3s;
+}
+
+.search-input:focus {
+    border-color: #f08a24;
+    outline: none;
+    box-shadow: 0 0 5px rgba(240, 138, 36, 0.5);
 }
 
         /* নেভিগেশন বাটন গ্রুপ */
