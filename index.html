@@ -237,6 +237,37 @@ header {
 .player-name { font-weight: bold; color: #f0f6fc; font-size: 1rem; }
 .rank-desc { font-size: 0.8rem; color: #8b949e; }
 
+/* স্কিন কনটেইনার */
+.skin-wrapper {
+    position: relative;
+    width: 44px; /* ৪৪ পিক্সেল করে দিলাম ২ পিক্সেল বাড়তি জায়গা রাখার জন্য */
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 12px;
+}
+
+/* ধূসর রঙের ব্যাকগ্রাউন্ড */
+.skin-bg {
+    position: absolute;
+    width: 44px;
+    height: 44px;
+    background-color: #2f363d;
+    border-radius: 4px;
+    z-index: 1;
+}
+
+/* স্কিনের সাইজ */
+.player-skin-full {
+    width: 40px; /* স্কিনকে ৪০ পিক্সেল রাখা হয়েছে যাতে চারপাশে ২ পিক্সেলের গ্যাপ থাকে */
+    height: auto;
+    z-index: 2;
+    position: relative;
+    object-fit: contain;
+}
+
+ 
 /* প্লেয়ার এবং রিজিয়ন ব্যাজকে পাশাপাশি রাখার জন্য */
 .player-row-item .player-container { 
     display: flex; 
