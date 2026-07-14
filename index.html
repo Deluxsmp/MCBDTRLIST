@@ -288,8 +288,8 @@ header {
 }
 
 /* টিয়ার সেকশনের জন্য নতুন স্টাইল */
-.tiers-container { display: flex; gap: 8px; align-items: center; }
-.tier-item { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+.tiers-container { display: flex; gap: 8px; align-items: center; flex-wrap: wrap }
+.tier-item { display: flex; flex-direction: column; align-items: center; gap: 2px; flex-direction: row }
 .tier-icon { width: 22px; height: 22px; object-fit: contain; }
 .tier-label { font-size: 0.7rem; font-weight: bold; }
         
@@ -518,10 +518,16 @@ header {
             <div class="tier-item">
                 <img src="https://i.postimg.cc/qB8vkfpb/sword.png" class="tier-icon">
                 <span class="tier-label" style="color: #f08a24;">LT4</span>
+            </div>
+            <div class="tier-item">
                 <img src="https://i.postimg.cc/3x6kkgVP/mace.png" class="tier-icon">
                 <span class="tier-label" style="color: #f08a24;">HT5</span>
-                <img src="https://i.postimg.cc/qM3XBvN6/nethop.png" class="tier-icon">
+            </div>
+                    <div class="tier-item">
+                        <img src="https://i.postimg.cc/qM3XBvN6/nethop.png" class="tier-icon">
                 <span class="tier-label" style="color: #f08a24;">LT4</span>
+                        </div>
+            <div class="tier-item">
                 <img src="https://i.postimg.cc/cL1RRMDy/smp.png" class="tier-icon">
                 <span class="tier-label" style="color: #f08a24;">HT4</span>
             </div>
