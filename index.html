@@ -187,24 +187,28 @@ header {
     transition: border-bottom 0.3s ease;
 }
 
-        /* কমন কন্টেন্ট হোল্ডার */
         .page-section {
-            display: none;
-            width: 100%;
-            max-width: 1200px;
+    display: none;
+    width: 95%; /* টেবিলটি যাতে পুরো জায়গা জুড়ে না থাকে */
+    max-width: 1100px;
+    margin: 0 auto; /* অটো মার্জিন দিয়ে মাঝখানে আনা */
+    padding-left: 20px; /* এটি টেবিলটিকে বাম পাশ থেকে কিছুটা ডানে সরিয়ে দেবে */
         }
 
         .page-section.active {
             display: block;
         }
 
-        /* OVERALL RANKINGS (টেবিল ভিউ) */
         .overall-table {
-            width: 100%;
-            background-color: #161b22;
-            border-radius: 8px;
-            border: 1px solid #21262d;
-            border-collapse: collapse;
+    width: 100%;
+    margin-top: 10px;
+    background-color: #161b22;
+    border-radius: 8px;
+    border: 1px solid #21262d;
+    border-collapse: collapse;
+    /* প্রয়োজনে বাম দিকে একটু জায়গা রাখার জন্য */
+    margin-left: auto;
+    margin-right: auto;
         }
 
         .overall-table th, .overall-table td {
