@@ -344,7 +344,7 @@ header {
         /* MCTIERS এর মতো পাশাপাশি (Horizontal) গ্রিড লেআউট */
         .tier-grid-container {
             display: flex;
-            flex-direction: row;
+            flex-direction: column;
             gap: 15px;
             width: 100%;
             overflow-x: auto;
@@ -368,16 +368,17 @@ header {
             background: #f08a24;
         }
 
-        .tier-box {
-            min-width: 230px;
-            flex: 1;
-            background-color: #161b22;
-            border-radius: 6px;
-            border: 1px solid #21262d;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-        }
+        
+       .tier-box {
+    width: 100%;            /* বক্সগুলোকে পুরো চওড়া করে দেবে */
+    max-width: 800px;       /* আপনি চাইলে বক্সের সাইজ এখান থেকে নিয়ন্ত্রণ করতে পারবেন */
+    background-color: #161b22;
+    border-radius: 6px;
+    border: 1px solid #21262d;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+       }
 
         .tier-title {
             padding: 10px;
