@@ -1,4 +1,4 @@
-<script>
+
     function showWebsite() {
         document.getElementById('landing-page').style.display = 'none';
         document.getElementById('main-content').style.display = 'block';
@@ -12,4 +12,4 @@
             rows[i].style.display = name.toUpperCase().indexOf(input) > -1 ? "" : "none";
         }
     }
-</script>
+
