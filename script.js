@@ -779,7 +779,83 @@ function showSection(sectionId) {
         showWebsite();
     }
 }
+// ==========================================
+// TIER SYSTEM & AUTOMATIC UPDATE LOGIC
+// ==========================================
 
+// ১. প্রতিটি টিয়ারের জন্য নির্ধারিত পয়েন্ট
+const tierPointsMap = {
+    "HT1": 100, "LT1": 80,
+    "HT2": 60,  "LT2": 50,
+    "HT3": 40,  "LT3": 30,
+    "HT4": 20,  "LT4": 15,
+    "HT5": 10,  "LT5": 5,
+    "?": 0,    "-": 0
+};
+
+/**
+ * প্লেয়ারের টিয়ার ও পয়েন্ট আপডেট করার ফংশন
+ * @param {string} playerName - প্লেয়ারের নাম (যেমন: "Itz_Dhrubo")
+ * @param {number} gameIndex - গেম মোডের ইনডেক্স (0: Nethop, 1: Axe, 2: Sword, 3: Pot, 4: UHC, 5: SMP, 6: Shield/Other, 7: Mace)
+ * @param {string} newTierLabel - নতুন টিয়ার (যেমন: "HT4", "LT3")
+ * @param {string} region - রিজিয়ন শর্টকোড (ডিফল্ট: "AS")
+ * @param {string} regionFull - রিজিয়ন নাম (ডিফল্ট: "Asia")
+ */
+function updatePlayerTier(playerName, gameIndex, newTierLabel, region = "AS", regionFull = "Asia") {
+    
+    // কেস সেনসিটিভ ঝামেলা এড়াতে নাম মিলিয়ে খোঁজা
+    let player = playersData.find(p => p.name.toLowerCase() === playerName.toLowerCase());
+
+    if (player) {
+        // --- প্লেয়ার পাওয়া গেলে: তথ্য আপডেট ---
+        
+        // ১. পুরনো টিয়ারের পয়েন্ট বাদ দেওয়া
+        let oldTierLabel = player.tiers[gameIndex].label;
+        let oldPoints = tierPointsMap[oldTierLabel] || 0;
+        player.points -= oldPoints;
+
+        // ২. নতুন টিয়ার বসানো
+        player.tiers[gameIndex].label = newTierLabel;
+
+        // ৩. নতুন টিয়ারের পয়েন্ট যোগ করা
+        let newPoints = tierPointsMap[newTierLabel] || 0;
+        player.points += newPoints;
+
+        console.log(`Updated ${player.name}: Changed ${oldTierLabel} to ${newTierLabel}. New Total Points: ${player.points}`);
+
+    } else {
+        // --- নতুন প্লেয়ার হলে: নতুন অ্যাকাউন্ট তৈরি ---
+        
+        let defaultTiers = [
+            { icon: "https://i.postimg.cc/qM3XBvN6/nethop.png", label: "?" },
+            { icon: "https://i.postimg.cc/xdK4XPqk/axe.png", label: "?" },
+            { icon: "https://i.postimg.cc/qB8vkfpb/sword.png", label: "?" },
+            { icon: "https://i.postimg.cc/sXG1PvdS/pot.png", label: "?" },
+            { icon: "https://i.postimg.cc/zD9KQY0P/uhc.png", label: "?" },
+            { icon: "https://i.postimg.cc/cL1RRMDy/smp.png", label: "?" },
+            { icon: "https://i.postimg.cc/nLYDjsJS/638965736295609752.png", label: "?" },
+            { icon: "https://i.postimg.cc/3x6kkgVP/mace.png", label: "?" }
+        ];
+
+        // নির্দিষ্ট গেমে নতুন টিয়ার বসানো
+        defaultTiers[gameIndex].label = newTierLabel;
+        let initialPoints = tierPointsMap[newTierLabel] || 0;
+
+        let newPlayer = {
+            name: playerName,
+            points: initialPoints,
+            region: region,
+            regionFull: regionFull,
+            tiers: defaultTiers
+        };
+
+        playersData.push(newPlayer);
+        console.log(`Added new player: ${playerName} with ${initialPoints} points.`);
+    }
+
+    // র‍্যাঙ্ক এবং পয়েন্ট পুনর্নির্ধারণ করে টেবিল আপডেট করা
+    renderTable();
+}
 function openPlayerModal(index) {
     const player = playersData[index];
     document.getElementById('modalPlayerName').innerText = player.name;
