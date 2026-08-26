@@ -595,7 +595,7 @@ const playersData = [
         name: "Hasan7me12",
         points: 66,
         region: "AS",
-        regionFull: "ALT3a",
+        regionFull: "Asia",
         tiers: [
             { icon: "https://i.postimg.cc/qM3XBvN6/nethop.png", label: "?" },
             { icon: "https://i.postimg.cc/xdK4XPqk/axe.png", label: "?" },
