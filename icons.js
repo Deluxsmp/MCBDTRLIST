@@ -11,6 +11,6 @@ const VORTEX_ICONS = {
   nethop: 'https://www.mctiers.it/modes/nethpot.svg',
   smp: 'https://www.mctiers.it/modes/smp.svg',
   sword: 'https://www.mctiers.it/modes/sword.svg',
-  axe: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRGVLDY9kn4JMYV1b311OLVD4MxnC5PhtB1Kq3n5dsKJ7fVYlEBWoEu_30&s=10',
+  axe: 'https://tiermaker.com/images/media/template_images/2024/18026725/all-marlow-mctiers-and-subtiers-pvp-gamemodes-18026725/axe.png',
   mace: 'https://tiermaker.com/images/media/template_images/2024/18026725/all-marlow-mctiers-and-subtiers-pvp-gamemodes-18026725/mace.png'
 };
