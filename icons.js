@@ -4,7 +4,7 @@
    Overall leaderboard rows, and the player details modal.
 */
 const VORTEX_ICONS = {
-  overall: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcROAjSGzda32-VjzBok8PkUGn_47czoN_g_CVSZH20PSA&s',
+  overall: 'https://i.postimg.cc/tTKmnYtK/7050-removebg-preview.png',
   vanilla: 'https://www.mctiers.it/modes/vanilla.svg',
   uhc: 'https://www.mctiers.it/modes/uhc.svg',
   pot: 'https://www.mctiers.it/modes/diapot.svg',
