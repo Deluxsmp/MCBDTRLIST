@@ -5,12 +5,12 @@
 */
 const VORTEX_ICONS = {
   overall: 'https://mctiers.com/tier_icons/overall.svg',
-  vanilla: 'https://mctiers.com/tier_icons/vanilla.svg',
-  uhc: 'https://mctiers.com/tier_icons/uhc.svg',
-  pot: 'https://mctiers.com/tier_icons/pot.svg',
-  nethop: 'https://mctiers.com/tier_icons/nethop.svg',
-  smp: 'https://mctiers.com/tier_icons/smp.svg',
-  sword: 'https://mctiers.com/tier_icons/sword.svg',
+  vanilla: 'https://www.mctiers.it/modes/vanilla.svg',
+  uhc: 'https://www.mctiers.it/modes/uhc.svg',
+  pot: 'https://www.mctiers.it/modes/diapot.svg',
+  nethop: 'https://www.mctiers.it/modes/nethpot.svg',
+  smp: 'https://www.mctiers.it/modes/smp.svg',
+  sword: 'https://www.mctiers.it/modes/sword.svg',
   axe: 'https://mctiers.com/tier_icons/axe.svg',
   mace: 'https://mctiers.com/tier_icons/mace.svg'
 };
