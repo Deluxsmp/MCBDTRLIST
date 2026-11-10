@@ -1,68 +1,866 @@
-const VORTEX_DATA={
-  "modes":[
-    {"id":"overall","n":"Overall","i":"🏆"},
-    {"id":"vanilla","n":"Vanilla","i":"🟪"},
-    {"id":"uhc","n":"UHC","i":"❤️"},
-    {"id":"pot","n":"Pot","i":"🧪"},
-    {"id":"nethop","n":"NetHop","i":"🟣"},
-    {"id":"smp","n":"SMP","i":"🟢"},
-    {"id":"sword","n":"Sword","i":"🗡️"},
-    {"id":"axe","n":"Axe","i":"🪓"},
-    {"id":"mace","n":"Mace","i":"🔨"}
-  ],
-  "icons":{},
-  "site":{"siteName":"Vortex Tier","discordUrl":"https://discord.com","serverIp":"join our discord"},
-  "players":(typeof VORTEX_PLAYERS!=='undefined'?VORTEX_PLAYERS:[])
-};
-let DATA=VORTEX_DATA;
-// Icons are configured once in icons.js and reused everywhere.
-DATA.icons={...DATA.icons,...(typeof VORTEX_ICONS!=='undefined'?VORTEX_ICONS:{})};
-let active='overall';
-const modesEl=document.getElementById('modes'),boardEl=document.getElementById('leaderboard'),search=document.getElementById('search');
-const modal=document.getElementById('modal'),modalBody=document.getElementById('playerModalBody');
-const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
-function iconHTML(m,cls='mode-icon-img'){
- const url=DATA.icons?.[m.id]||'';
- if(!url) return `<span class="icon-fallback"></span>`;
- return `<img class="${cls}" src="${esc(url)}" alt="${esc(m.n)}" loading="eager" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'"><span class="icon-fallback" style="display:none"></span>`;
-}
-function skinUrl(p){return p.skinUrl||`https://mc-heads.net/body/${encodeURIComponent(p.name)}/100.png`}
-function skinFallback(img){if(img.dataset.failed==='1'){img.src='https://mc-heads.net/body/Steve/100.png';return}img.dataset.failed='1';img.src='https://mc-heads.net/body/Steve/100.png'}
-function modeById(id){return DATA.modes.find(m=>m.id===id)||{id:id,n:id,i:'•'}}
-function result(p,id){return p.results?.[id]||null}
-function isTestedResult(r){return !!r && String(r.tier||'').trim()!==''}
-function tierNum(t){const m=String(t||'').match(/[1-5]$/);return m?Number(m[0]):null}
-function titleFor(pos){return pos===1?'Combat Grandmaster':pos<=3?'Combat Master':'Combat Ace'}
-function emojiFor(pos){return pos===1?'👑':pos<=3?'🏅':'⚔️'}
-function tierClass(t){return String(t||'').toLowerCase().replace(/[^a-z0-9]/g,'')}
-function renderModes(){modesEl.innerHTML=DATA.modes.map(m=>`<button class="mode ${m.id===active?'active':''}" data-id="${m.id}"><span class="ico">${iconHTML(m)}</span>${esc(m.n)}</button>`).join('');document.querySelectorAll('.mode').forEach(b=>b.onclick=()=>{active=b.dataset.id;document.querySelectorAll('.mode').forEach(x=>x.classList.toggle('active',x===b));search.value='';render()})}
-function render(){const q=search.value.toLowerCase().trim();active==='overall'?renderOverall(q):renderMode(q)}
-function renderOverall(q){
- const arr=DATA.players.filter(p=>p.name.toLowerCase().includes(q));
- if(!arr.length){boardEl.innerHTML='<div class="emptyrow">No players found.</div>';return}
- boardEl.innerHTML='<div class="overall-head"><span>#</span><span>Player</span><span>Region</span><span>Rankings</span></div>';
- const modeIds=['smp','pot','nethop','vanilla','sword','axe','mace','uhc'];
- arr.forEach(p=>{
-  const pos=p.position, rankTitle=titleFor(pos), rankEmoji=emojiFor(pos), rankClass=pos===1?'rank-gold':pos===2?'rank-silver':pos===3?'rank-bronze':'rank-normal';
-  const cats=modeIds.map(id=>{const m=modeById(id),r=result(p,id),tested=isTestedResult(r),t=r?.tier||'';if(!tested)return `<div class="mini mini-empty"><div class="mini-icon blank-icon"></div><span class="mini-label empty-tier">—</span></div>`;return `<div class="mini"><div class="mini-icon">${iconHTML(m,'mini-icon-img')}</div><span class="mini-label ${tierClass(t)}">${esc(t)}</span></div>`}).join('');
-  boardEl.insertAdjacentHTML('beforeend',`<div class="player-row ${rankClass}" data-id="${p.id}"><div class="pos-wrap"><div class="pos">${pos}.</div></div><div class="p-main"><span class="skin-frame"><img class="skin" src="${esc(skinUrl(p))}" alt="${esc(p.name)}" onerror="skinFallback(this)"></span><div><div class="p-name">${esc(p.name)}</div><div class="p-title"><span class="rank-title-emoji">${rankEmoji}</span> ${rankTitle} <span class="points">(${p.totalPoints} points)</span></div></div></div><div class="region ${esc(p.region).toLowerCase()}">${esc(p.region)}</div><div class="mini-tiers">${cats}</div></div>`);
- });
-}
-function renderMode(q){
- const arr=DATA.players.filter(p=>p.name.toLowerCase().includes(q));
- const filtered={1:[],2:[],3:[],4:[],5:[]};
- arr.forEach(p=>{const r=result(p,active);const n=tierNum(r?.tier);if(n)filtered[n].push(p)});
- boardEl.innerHTML=`<div class="mode-board">${[1,2,3,4,5].map(n=>`<div class="tier-column tier-${n}"><div class="tier-head"><span>🏆</span>Tier ${n}</div><div class="tier-list">${filtered[n].length?filtered[n].map(p=>`<div class="tier-player" data-id="${p.id}"><span class="tier-skin-frame"><img src="${esc(skinUrl(p))}" alt="${esc(p.name)}" onerror="skinFallback(this)"></span><span class="name">${esc(p.name)}</span><span class="up">⌃</span></div>`).join(''):'<div class="tier-player"><span class="name">No players</span></div>'}</div></div>`).join('')}</div>`;
-}
-function modalFor(p){
- const regionName={NA:'North America',EU:'Europe',ME:'Middle East',AS:'Asia'}[p.region]||p.region;
- const title=titleFor(p.position);
- const testedModes=['smp','pot','nethop','vanilla','sword','axe','mace','uhc'];
- const tiers=testedModes.map(id=>{const m=modeById(id),r=result(p,id);if(!isTestedResult(r))return `<div class="modal-tier modal-tier-empty"><div class="modal-tier-icon"></div><b>—</b></div>`;return `<div class="modal-tier"><div class="modal-tier-icon">${iconHTML(m,'mini-icon-img')}</div><b class="${tierClass(r.tier||'')}">${esc(r.tier||'')}</b>${r.points!==null&&r.points!==undefined&&r.points!==''?`<small>${r.points} pts</small>`:''}</div>`}).join('');
- modalBody.innerHTML=`<div class="modal-player-top"><div class="modal-avatar"><img src="${esc(skinUrl(p))}" alt="${esc(p.name)}" onerror="skinFallback(this)"></div><h2>${esc(p.name)}</h2><div class="modal-rank">${emojiFor(p.position)} ${title}</div><div class="modal-region-text">${esc(regionName)}</div><a class="namemc-link" href="https://namemc.com/profile/${encodeURIComponent(p.name)}" target="_blank" rel="noopener">◧ NameMC ↗</a></div><div class="modal-section-title">Position</div><div class="modal-position-box"><span class="modal-position-number">${p.position}.</span><span>🏆 <strong>OVERALL</strong> <small>(${p.totalPoints} points)</small></span></div><div class="modal-section-title">Tiers</div><div class="modal-tiers-grid">${tiers}</div>`;
- modal.classList.remove('hidden');
-}
-boardEl.addEventListener('click',e=>{const row=e.target.closest('[data-id]');if(!row)return;const p=DATA.players.find(x=>x.id===Number(row.dataset.id));if(p)modalFor(p)});
-search.oninput=render;
-document.getElementById('info').onclick=()=>modal.classList.remove('hidden');document.getElementById('close').onclick=()=>modal.classList.add('hidden');modal.onclick=e=>{if(e.target===modal)modal.classList.add('hidden')};
-if(DATA.site?.siteName)document.title=DATA.site.siteName+' — Rankings'; const server=document.querySelector('.server'); if(server&&DATA.site?.serverIp) server.innerHTML='<i></i> '+esc(DATA.site.serverIp); renderModes();render();
+/* ============================================================
+   Vortex Tier — SHARED APP LOGIC  (v6)
+   Renders nav, footer and every page section from data.js
+   ------------------------------------------------------------
+   v6: Tier 6 removed everywhere (tiers page shows Tier 1-5 only).
+       MT / ST tier references removed (only HT1-HT5 + LT1-LT5).
+       Kill / Death / Win Rate fields removed everywhere.
+       Home page fully redesigned (premium esports look).
+   v8: one legacy kit removed. Home stat cards are now LIVE metrics
+       derived from the real data (players, kits, tiers, regions,
+       countries, tourneys, news, servers). Home page polished.
+   v3: SMP / Bow / Shield kits removed. Admin links removed from
+       public pages. Players / Tourneys / News / Servers show
+       empty states. Stats are derived from real data.
+   ============================================================ */
+(function () {
+  const D = window.MCRANKED || {};
+  const SITE = D.SITE || {};
+  const MODES = D.MODES || [];
+  let PLAYERS = D.PLAYERS || [];
+  const ICONS = D.ICONS || {};
+  const REGIONS = D.REGIONS || {};
+  const TIER_DEFS = D.TIER_DEFS || [];
+
+  /* ---------- helpers ---------- */
+  const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;" }[c]));
+  const modeById = (id) => MODES.find((m) => m.id === id) || { id, n: id, i: "•" };
+  const result = (p, id) => (p.results ? p.results[id] : null);
+  const isTested = (r) => !!r && String(r.tier || "").trim() !== "";
+  const tierNum = (t) => { const m = String(t || "").match(/[1-5]$/); return m ? Number(m[0]) : null; };
+  const tierClass = (t) => "t-" + String(t || "").toLowerCase().replace(/[^a-z0-9]/g, "");
+  const tierDef = (code) => TIER_DEFS.find((t) => t.code === code) || { color: "#8b98ab", bg: "#232c39", label: code };
+  const overallTier = (p) => { const t = TIER_DEFS.find((d) => (p.totalPoints || 0) >= d.min); return t ? t.code : ""; };
+  /* v15: skins render LARGE + FULL BODY (mcpvp.com style).
+     skinUrl     -> 3D isometric FULL BODY (tiers rows, tier columns, player cards)
+     skinBodyUrl -> 3D isometric FULL BODY (podium, modal)
+     Both use mc-heads.net /body/ so the whole skin shows (waist down + arms),
+     not just the head. Facing direction is whatever the player's own skin has. */
+  const skinUrl = (p) => p.skinUrl || `https://mc-heads.net/body/${encodeURIComponent(p.name)}/200.png`;
+  const skinBodyUrl = (p) => p.skinBodyUrl || `https://mc-heads.net/body/${encodeURIComponent(p.name)}/200.png`;
+  const skinFallback = (img) => { if (img.dataset.failed === "1") { img.src = "https://mc-heads.net/body/Steve/200.png"; return; } img.dataset.failed = "1"; img.src = "https://mc-heads.net/body/Steve/200.png"; };
+  const skinFallbackBody = (img) => { if (img.dataset.failed === "1") { img.src = "https://mc-heads.net/body/Steve/200.png"; return; } img.dataset.failed = "1"; img.src = "https://mc-heads.net/body/Steve/200.png"; };
+  const titleFor = (pos) => (pos === 1 ? "Combat Grandmaster" : pos <= 3 ? "Combat Master" : "Combat Ace");
+  const emojiFor = (pos) => (pos === 1 ? "👑" : pos <= 3 ? "🏅" : "⚔️");
+  /* Badge / rank is auto-assigned from the live leaderboard position:
+     #1 -> Combat Grandmaster, #2 & #3 -> Combat Master, everyone else -> Combat Ace */
+  const rankBadge = (pos) => {
+    const list = D.RANK_BADGES || [];
+    const key = pos === 1 ? "grandmaster" : pos <= 3 ? "master" : "ace";
+    return list.find((b) => b.key === key) || { name: titleFor(pos), emoji: emojiFor(pos), color: "#8b7cff", bg: "#2a3244" };
+  };
+  const badgeChip = (pos, cls) => {
+    const b = rankBadge(pos);
+    return `<span class="rank-badge ${cls || ""}" style="color:${b.color};border-color:${b.color}55;background:${b.bg}">${b.emoji} ${esc(b.name)}</span>`;
+  };
+  const regionName = (code) => (REGIONS[code] ? REGIONS[code].name : code);
+  const regionFlag = (code) => (REGIONS[code] ? REGIONS[code].flag : "🌐");
+  const iconHTML = (m, cls) => {
+    const url = ICONS[m.id] || m.icon || "";
+    if (!url) return `<span class="icon-fallback">${esc(m.i || "•")}</span>`;
+    return `<img class="${cls || "mode-icon-img"}" src="${esc(url)}" alt="${esc(m.n)}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'"><span class="icon-fallback" style="display:none">${esc(m.i || "•")}</span>`;
+  };
+  const badgeColor = (b) => (D.BADGE_CATALOG && D.BADGE_CATALOG[b]) || "#8b7cff";
+  /* v17: small kit chips for a player (top N tested kits) */
+  const topKitChips = (p, n) => {
+    const tested = MODES.filter((m) => m.id !== "overall" && isTested(result(p, m.id)));
+    return tested.slice(0, n || 3).map((m) => {
+      const r = result(p, m.id);
+      const td = tierDef(r.tier);
+      return `<span class="kit-chip" style="color:${td.color};border-color:${td.color}55;background:${td.bg}">${esc(m.n)} <b>${esc(r.tier)}</b></span>`;
+    }).join("");
+  };
+
+  /* ---------- empty state ---------- */
+  function emptyState(opts) {
+    const o = opts || {};
+    return `<div class="empty-state">
+      <div class="empty-icon">${o.icon || "📭"}</div>
+      <h3>${esc(o.title || "Nothing here yet")}</h3>
+      <p>${esc(o.text || "")}</p>
+      ${o.action ? `<a class="btn btn-primary btn-sm" href="${esc(o.action.href)}">${esc(o.action.label)}</a>` : ""}
+    </div>`;
+  }
+
+  /* ---------- derived stats (real data only) ---------- */
+  function derivedStats() {
+    const kits = MODES.filter((m) => m.id !== "overall");
+    const countries = new Set(PLAYERS.map((p) => p.country).filter(Boolean)).size;
+    return {
+      players: PLAYERS.length,
+      kits: kits.length,
+      tiers: TIER_DEFS.length,
+      regions: Object.keys(REGIONS).length,
+      countries,
+      tourneys: (D.TOURNEYS || []).length,
+      news: (D.NEWS || []).length,
+      servers: (D.SERVER_REGIONS || []).length
+    };
+  }
+
+  /* ---------- nav + footer ---------- */
+  const NAV = [
+    { href: "index.html", label: "Home" },
+    { href: "tiers.html", label: "Tiers" },
+    { href: "players.html", label: "Players" },
+    { href: "kits.html", label: "Kits" },
+    { href: "tourneys.html", label: "Tourneys" },
+    { href: "news.html", label: "News" },
+    { href: "servers.html", label: "Servers" }
+  ];
+  function renderNav() {
+    const el = document.getElementById("site-nav");
+    if (!el) return;
+    const here = (location.pathname.split("/").pop() || "index.html");
+    el.innerHTML = `
+      <div class="wrap">
+        <a class="logo" href="index.html"><span class="mark">⚔</span><span class="logo-text">${esc(SITE.siteName || "Vortex Tier")}</span></a>
+        <nav class="navlinks" id="navlinks">
+          ${NAV.map((n) => `<a href="${n.href}" class="${n.href === here ? "active" : ""}">${n.label}</a>`).join("")}
+        </nav>
+        <div style="display:flex;gap:10px;align-items:center">
+          <a class="nav-cta" href="${esc(SITE.discordUrl || "#")}" target="_blank" rel="noopener">Join Discord</a>
+          <button class="nav-toggle" id="navToggle" aria-label="Menu">☰</button>
+        </div>
+      </div>`;
+    const t = document.getElementById("navToggle");
+    if (t) t.onclick = () => document.getElementById("navlinks").classList.toggle("open");
+  }
+  function renderFooter() {
+    const el = document.getElementById("site-footer");
+    if (!el) return;
+    el.innerHTML = `
+      <div class="wrap">
+        <div class="footer-grid">
+          <div class="footer-about">
+            <a class="logo" href="index.html"><span class="mark">⚔</span><span class="logo-text">${esc(SITE.siteName || "Vortex Tier")}</span></a>
+            <p>${esc(SITE.tagline || "")} — get tested by skilled testers, earn your official tier, and climb the leaderboard.</p>
+          </div>
+          <div><h5>Compete</h5><ul>
+            <li><a href="tiers.html">Tier List</a></li>
+            <li><a href="players.html">Players</a></li>
+            <li><a href="kits.html">Kits</a></li>
+            <li><a href="tourneys.html">Tourneys</a></li>
+          </ul></div>
+          <div><h5>Community</h5><ul>
+            <li><a href="${esc(SITE.discordUrl || "#")}" target="_blank" rel="noopener">Discord</a></li>
+            <li><a href="${esc(SITE.youtube || "#")}" target="_blank" rel="noopener">YouTube</a></li>
+            <li><a href="${esc(SITE.twitch || "#")}" target="_blank" rel="noopener">Twitch</a></li>
+            <li><a href="${esc(SITE.twitter || "#")}" target="_blank" rel="noopener">Twitter / X</a></li>
+          </ul></div>
+          <div><h5>Info</h5><ul>
+            <li><a href="news.html">News</a></li>
+            <li><a href="servers.html">Servers</a></li>
+            <li><a href="${esc(SITE.storeUrl || "#")}">Store</a></li>
+          </ul></div>
+        </div>
+        <div class="footer-bottom">
+          <span>© ${new Date().getFullYear()} ${esc(SITE.siteName || "Vortex Tier")} · Minecraft PvP Rankings</span>
+          <span>Server IP: <b>${esc(SITE.serverIp || "")}</b></span>
+        </div>
+      </div>`;
+  }
+
+  /* ---------- shared: player modal ---------- */
+  function ensureModal() {
+    let m = document.getElementById("playerModal");
+    if (m) return m;
+    m = document.createElement("div");
+    m.id = "playerModal";
+    m.className = "modal hidden";
+    m.innerHTML = `<div class="modal-card"><button class="modal-x" id="pmClose">×</button><div id="pmBody"></div></div>`;
+    document.body.appendChild(m);
+    m.addEventListener("click", (e) => { if (e.target === m) m.classList.add("hidden"); });
+    m.querySelector("#pmClose").onclick = () => m.classList.add("hidden");
+    return m;
+  }
+  function openPlayer(p) {
+    const m = ensureModal();
+    const body = m.querySelector("#pmBody");
+    const tested = MODES.filter((x) => x.id !== "overall");
+    const tiers = tested.map((mo) => {
+      const r = result(p, mo.id);
+      if (!isTested(r)) return `<div class="modal-tier"><span class="mt-name">${esc(mo.n)}</span><span class="mt-empty">—</span></div>`;
+      return `<div class="modal-tier"><span class="mt-name">${esc(mo.n)}</span>${iconHTML(mo, "mini-icon-img")}<span class="tier-label ${tierClass(r.tier)}">${esc(r.tier)}</span></div>`;
+    }).join("");
+    body.innerHTML = `
+      <div class="modal-top">
+        <img class="modal-avatar skin-full" src="${esc(skinBodyUrl(p))}" alt="${esc(p.name)}" onerror="skinFallbackBody(this)">
+        <h2>${esc(p.name)}</h2>
+        <div class="modal-title-badge">${badgeChip(p.position || 99)}</div>
+        <div class="modal-region">${regionFlag(p.region)} ${esc(regionName(p.region))}${p.country ? " · " + esc(p.country) : ""}</div>
+      </div>
+      <div class="modal-section"><h4>Overall Standing</h4>
+        <div class="modal-stats">
+          <div class="modal-stat"><b>#${p.position}</b><span>Rank</span></div>
+          <div class="modal-stat"><b>${p.totalPoints}</b><span>Points</span></div>
+          <div class="modal-stat"><b>${esc(p.team || "—")}</b><span>Team</span></div>
+          <div class="modal-stat"><b>${p.tester ? "Yes" : "No"}</b><span>Tester</span></div>
+        </div>
+      </div>
+      <div class="modal-section"><h4>Tiers (${tested.length} kits)</h4><div class="modal-tiers">${tiers}</div></div>
+      ${p.bio ? `<div class="modal-section"><h4>About</h4><p class="modal-bio">${esc(p.bio)}</p></div>` : ""}
+      <div class="modal-section"><h4>Profile</h4>
+        <div class="modal-socials">
+          <a href="https://namemc.com/profile/${encodeURIComponent(p.name)}" target="_blank" rel="noopener">NameMC ↗</a>
+          ${p.uuid ? `<a href="#" onclick="return false">UUID: ${esc(String(p.uuid).slice(0, 8))}…</a>` : ""}
+        </div>
+      </div>`;
+    m.classList.remove("hidden");
+  }
+  window.MCRANKED_openPlayer = openPlayer;
+  window.skinFallback = skinFallback;
+  window.skinFallbackBody = skinFallbackBody;
+
+  /* ---------- HOME ---------- */
+  function renderHome() {
+    const root = document.getElementById("home-root");
+    if (!root) return;
+    const sorted = [...PLAYERS].sort((a, b) => a.position - b.position);
+    const top = sorted.slice(0, 3);
+    const rest = sorted.slice(3, 5);
+    const st = derivedStats();
+    const statCards = [
+      ["countries", "Countries", "🏳️"], ["tourneys", "Tourneys", "🏅"],
+      ["news", "News Posts", "📰"], ["servers", "Servers", "🌐"]
+    ].map(([k, l, ic]) => `<div class="home-stat"><span class="hs-icon">${ic}</span><div class="hs-value">${(st[k] ?? 0).toLocaleString()}</div><div class="hs-label">${l}</div></div>`).join("");
+
+    /* v16: scrolling ticker — duplicated in the markup so the loop is seamless */
+    const tickerItems = [
+      `SEASON RESET · ${esc(SITE.nextRevealLabel || "SOON")}`,
+      `SERVER IP · ${esc(SITE.serverIp || "—")}`,
+      `${st.kits ?? 0} KITS RANKED`,
+      `${st.tiers ?? 0} TIERS · HT1–HT5 / LT1–LT5`,
+      `${st.countries ?? 0} COUNTRIES REPRESENTED`,
+      `GET TESTED · EARN YOUR TIER`
+    ].map((t) => `<span class="tk-item"><span class="tk-dot"></span>${t}</span>`).join("");
+
+    const podium = top.length ? top.map((p, i) => {
+      const cls = ["first", "second", "third"][i];
+      const chips = topKitChips(p, 3);
+      return `<a class="podium-card ${cls}" href="#" data-player="${p.id}">
+        ${i === 0 ? '<span class="podium-crown">\ud83d\udc51</span>' : ""}
+        <span class="podium-place">${p.position}</span>
+        <div class="podium-name">${esc(p.name)}</div>
+        <div class="podium-ava-wrap"><img class="podium-avatar skin-full" src="${esc(skinBodyUrl(p))}" alt="${esc(p.name)}" onerror="skinFallbackBody(this)"></div>
+        ${badgeChip(p.position)}
+        <span class="podium-points">${p.totalPoints} Points</span>
+        ${chips ? `<div class="podium-kits">${chips}</div>` : ""}
+        <span class="podium-ranknum">#${p.position}</span>
+      </a>`;
+    }).join("") : "";
+
+    /* v13: mcpvp.com-style top-5 — podium for #1-3, compact list for #4-5.
+       Each list row shows a small FULL-BODY skin, name, tier badge and points. */
+    const rows = rest.map((p) => {
+      const t = overallTier(p);
+      const td = tierDef(t);
+      return `<div class="home-rank-row rank-${p.position}" data-player="${p.id}">
+        <div class="hrr-pos">${p.position}</div>
+        <img class="hrr-skin skin-full" src="${esc(skinBodyUrl(p))}" alt="${esc(p.name)}" onerror="skinFallbackBody(this)">
+        <div class="hrr-name">${esc(p.name)}<span class="hrr-region">${regionFlag(p.region)} ${esc(p.region)}</span></div>
+        <span class="hrr-tier" style="color:${td.color};background:${td.bg};border-color:${td.color}55">${esc(t || "—")}</span>
+        <div class="hrr-points">${p.totalPoints}<small>points</small></div>
+      </div>`;
+    }).join("");
+
+    const kitCards = MODES.filter((m) => m.id !== "overall").map((m) => {
+      const count = PLAYERS.filter((p) => isTested(result(p, m.id))).length;
+      return `<a class="home-kit" href="kits.html">
+        <span class="home-kit-icon">${iconHTML(m, "home-kit-img")}</span>
+        <span class="home-kit-name">${esc(m.n)}</span>
+        <span class="home-kit-count">${count} ranked</span>
+      </a>`;
+    }).join("");
+
+    /* v17: featured kit spotlight — the most-played kits, big and premium */
+    const featured = MODES.filter((m) => m.id !== "overall")
+      .map((m) => {
+        const tested = PLAYERS.filter((p) => isTested(result(p, m.id)));
+        const top = tested.slice().sort((a, b) => (Number(result(b, m.id).points) || 0) - (Number(result(a, m.id).points) || 0))[0];
+        return { m, count: tested.length, top };
+      })
+      .sort((a, b) => b.count - a.count)
+      .slice(0, 3);
+    const featuredCards = featured.map(({ m, count, top }) => `
+      <a class="feat-kit" href="kits.html">
+        <span class="feat-kit-glow"></span>
+        <span class="feat-kit-ico">${iconHTML(m, "feat-kit-img")}</span>
+        <span class="feat-kit-body">
+          <span class="feat-kit-name">${esc(m.n)}</span>
+          <span class="feat-kit-count">${count} player${count === 1 ? "" : "s"} ranked</span>
+        </span>
+        ${top ? `<span class="feat-kit-top"><img src="${esc(skinUrl(top))}" alt="" onerror="skinFallback(this)"><span><b>${esc(top.name)}</b><small>#1 in ${esc(m.n)}</small></span></span>` : `<span class="feat-kit-top feat-kit-empty">No one ranked yet</span>`}
+      </a>`).join("");
+
+    const leaderboardBlock = (podium || rows)
+      ? `<div class="home-podium">${podium}</div>
+         ${rows ? `<div class="home-rank-list">${rows}</div>` : ""}`
+      : emptyState({
+          icon: "🏆",
+          title: "No players ranked yet",
+          text: "The leaderboard is empty right now. As soon as the first player is added — from the admin panel or by the Discord bot posting a result — the top 5 will appear here automatically.",
+          action: { href: "tiers.html", label: "View the tier list" }
+        });
+
+    const news = (D.NEWS || []).slice(0, 2).map((n) => `
+      <article class="news-card">
+        ${n.image ? `<div class="news-media"><img src="${esc(n.image)}" alt="${esc(n.title)}" loading="lazy" onerror="this.parentElement.style.display='none'"></div>` : ""}
+        <div class="news-body">
+          ${(n.tags && n.tags.length) ? `<div class="news-tags">${n.tags.map((t) => `<span class="news-tag">${esc(t)}</span>`).join("")}</div>` : ""}
+          <h3>${esc(n.title)}</h3><p>${esc(n.desc)}</p>
+          <div class="news-date">${esc(n.date)}</div>
+        </div>
+      </article>`).join("");
+
+    const newsBlock = news || emptyState({
+      icon: "📰",
+      title: "No news yet",
+      text: "Announcements, patch notes and season updates will show up here once published."
+    });
+
+    root.innerHTML = `
+      <section class="home-hero">
+        <div class="hero-bg" style="background-image:url('images/hero-bg.png')"></div>
+        <div class="wrap">
+          <span class="pill"><i></i> ${esc(SITE.siteName)} · LIVE</span>
+          <h1>The <span class="grad">#1 Cracked</span><br>&amp; Premium Tierlist</h1>
+          <p class="lead">${esc(SITE.tagline)}. Get tested by skilled testers, earn your official tier, and compete for a place on the global leaderboard.</p>
+          <div class="countdown" id="countdown">
+            <div class="cd-unit"><span class="cd-value" data-cd="days">00</span><span class="cd-label">Days</span></div>
+            <div class="cd-unit"><span class="cd-value" data-cd="hours">00</span><span class="cd-label">Hours</span></div>
+            <div class="cd-unit"><span class="cd-value" data-cd="minutes">00</span><span class="cd-label">Minutes</span></div>
+            <div class="cd-unit"><span class="cd-value" data-cd="seconds">00</span><span class="cd-label">Seconds</span></div>
+          </div>
+          <p class="cd-date">${esc(SITE.nextRevealLabel || "")}</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="tiers.html">⚡ View Rankings</a>
+            <a class="btn btn-ghost" href="${esc(SITE.discordUrl || "#")}" target="_blank" rel="noopener">Join Discord</a>
+          </div>
+        </div>
+        <div class="home-hero-strip"><div class="wrap">
+          <div class="hs-item"><span class="hs-num">${(st.players ?? 0).toLocaleString()}</span><span class="hs-cap">Players</span></div>
+          <div class="hs-item"><span class="hs-num">${(st.kits ?? 0).toLocaleString()}</span><span class="hs-cap">Kits</span></div>
+          <div class="hs-item"><span class="hs-num">${(st.tiers ?? 0).toLocaleString()}</span><span class="hs-cap">Tiers</span></div>
+          <div class="hs-item"><span class="hs-num">${(st.regions ?? 0).toLocaleString()}</span><span class="hs-cap">Regions</span></div>
+        </div></div>
+      </section>
+
+      <div class="home-ticker"><div class="tk-track">${tickerItems}${tickerItems}</div></div>
+
+      <section class="home-sec"><div class="wrap">
+        <div class="home-sec-head">
+          <div class="hsh-left"><p class="hsh-eyebrow">Live Network</p><h2>Vortex Tier at a glance</h2>
+            <p class="hsh-sub">Live counts, calculated automatically from the site data — add or remove anything in the admin panels and these update themselves.</p></div>
+        </div>
+        <div class="home-stats">${statCards}</div>
+      </div></section>
+
+      <section class="home-sec tight"><div class="wrap">
+        <div class="home-sec-head">
+          <div class="hsh-left"><p class="hsh-eyebrow">Leaderboard</p><h2>Top Players</h2>
+            <p class="hsh-sub">The best ${esc(SITE.siteName)} players, ranked by total points across every kit.</p></div>
+          <a class="btn btn-ghost btn-sm" href="tiers.html">Full Leaderboard →</a>
+        </div>
+        ${leaderboardBlock}
+      </div></section>
+
+      <section class="home-sec tight"><div class="wrap">
+        <div class="home-sec-head">
+          <div class="hsh-left"><p class="hsh-eyebrow">Gamemodes</p><h2>Kits &amp; Modes</h2>
+            <p class="hsh-sub">Every kit we rank players in. Counts update live as players are added.</p></div>
+          <a class="btn btn-ghost btn-sm" href="kits.html">All Kits →</a>
+        </div>
+        <div class="home-kits">${kitCards}</div>
+      </div></section>
+
+      <section class="home-sec tight"><div class="wrap">
+        <div class="home-sec-head">
+          <div class="hsh-left"><p class="hsh-eyebrow">Spotlight</p><h2>Featured Kits</h2>
+            <p class="hsh-sub">The kits with the most ranked players right now, and who leads each one.</p></div>
+          <a class="btn btn-ghost btn-sm" href="kits.html">All Kits \u2192</a>
+        </div>
+        <div class="home-featured">${featuredCards}</div>
+      </div></section>
+
+      <section class="home-sec tight"><div class="wrap">
+        <div class="home-sec-head">
+          <div class="hsh-left"><p class="hsh-eyebrow">How it works</p><h2>From unknown to ranked</h2>
+            <p class="hsh-sub">Three steps between you and an official tier on the global leaderboard.</p></div>
+        </div>
+        <div class="home-steps">
+          <div class="home-step"><span class="stp-glow"></span><span class="stp-num"><b>01</b> Register</span><h3>Join the server</h3><p>Hop on ${esc(SITE.serverIp || "the server")} and register your Minecraft name so testers can find you.</p></div>
+          <div class="home-step"><span class="stp-glow"></span><span class="stp-num"><b>02</b> Get tested</span><h3>Fight a tester</h3><p>Duel a verified tester in any kit. Every kit is scored separately, so one bad mode never sinks your profile.</p></div>
+          <div class="home-step"><span class="stp-glow"></span><span class="stp-num"><b>03</b> Climb</span><h3>Earn your tier</h3><p>Your result is posted automatically and your tier, points and rank update on the leaderboard instantly.</p></div>
+        </div>
+      </div></section>
+
+      <section class="home-sec tight"><div class="wrap">
+        <div class="home-features">
+          <a class="home-feature" href="tourneys.html">
+            <img class="feature-image" src="images/trophy.png" alt="" loading="lazy">
+            <span class="feature-content"><i class="feature-icon">🏆</i><span class="feature-title">Tourneys</span><span class="feature-subtitle">Compete For Cash Prizes</span></span>
+          </a>
+          <a class="home-feature" href="tiers.html">
+            <img class="feature-image" src="images/crown.png" alt="" loading="lazy">
+            <span class="feature-content"><i class="feature-icon">👑</i><span class="feature-title">Leaderboard</span><span class="feature-subtitle">Check Your Ranking</span></span>
+          </a>
+        </div>
+      </div></section>
+
+      <section class="home-sec tight"><div class="wrap">
+        <div class="home-cta">
+          <h2>Ready to prove you're <span class="grad">cracked</span>?</h2>
+          <p>Get tested by our verified testers, earn your official tier across every kit, and climb the global leaderboard. Your rank is waiting.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="tiers.html">⚡ View Rankings</a>
+            <a class="btn btn-ghost" href="${esc(SITE.discordUrl || "#")}" target="_blank" rel="noopener">Join Discord</a>
+          </div>
+        </div>
+      </div></section>
+
+      <section class="home-sec"><div class="wrap">
+        <div class="home-sec-head">
+          <div class="hsh-left"><p class="hsh-eyebrow">Updates</p><h2>Recent News</h2></div>
+          <a class="btn btn-ghost btn-sm" href="news.html">All News →</a></div>
+        <div class="news-grid">${newsBlock}</div>
+      </div></section>`;
+
+    startCountdown();
+    root.querySelectorAll("[data-player]").forEach((el) => {
+      el.addEventListener("click", (e) => {
+        e.preventDefault();
+        const p = PLAYERS.find((x) => String(x.id) === el.dataset.player);
+        if (p) openPlayer(p);
+      });
+    });
+  }
+
+  function startCountdown() {
+    const target = new Date(SITE.nextReveal || Date.now() + 86400000).getTime();
+    const tick = () => {
+      const diff = Math.max(0, target - Date.now());
+      const d = Math.floor(diff / 86400000), h = Math.floor((diff % 86400000) / 3600000),
+        m = Math.floor((diff % 3600000) / 60000), s = Math.floor((diff % 60000) / 1000);
+      const set = (k, v) => { const el = document.querySelector(`[data-cd="${k}"]`); if (el) el.textContent = String(v).padStart(2, "0"); };
+      set("days", d); set("hours", h); set("minutes", m); set("seconds", s);
+    };
+    tick(); setInterval(tick, 1000);
+  }
+
+  /* ---------- TIERS PAGE ---------- */
+  let tiersState = { mode: "overall", q: "", region: "all", country: "all", sort: "points" };
+  function renderTiers() {
+    const root = document.getElementById("tiers-root");
+    if (!root) return;
+    const modeTabs = MODES.map((m) => `<button class="mode ${m.id === tiersState.mode ? "active" : ""}" data-mode="${m.id}"><span class="ico">${iconHTML(m)}</span>${esc(m.n)}</button>`).join("");
+    const countries = [...new Set(PLAYERS.map((p) => p.country).filter(Boolean))].sort();
+    const countryOpts = `<option value="all">All countries</option>` + countries.map((c) => `<option value="${esc(c)}">${esc(c)}</option>`).join("");
+    const regionOpts = `<option value="all">All regions</option>` + Object.values(REGIONS).map((r) => `<option value="${r.code}">${r.name}</option>`).join("");
+
+    root.innerHTML = `
+      <div class="page-head"><div class="wrap">
+        <div class="crumbs"><a href="index.html">Home</a> / Tiers</div>
+        <h1>Player Tiers &amp; Rankings</h1>
+        <p>These tiers are BETA and reset at the end of each season. Filter by kit, region and country, then click any player for the full profile.</p>
+      </div></div>
+      <div class="wrap">
+        <div class="modes" id="modeTabs">${modeTabs}</div>
+        <div class="toolbar">
+          <div class="toolbar-left">
+            <input class="input search" id="tierSearch" placeholder="Search player..." type="search">
+            <select class="select" id="regionFilter">${regionOpts}</select>
+            <select class="select" id="countryFilter">${countryOpts}</select>
+            <select class="select" id="sortFilter">
+              <option value="points">Sort: Points</option>
+              <option value="name">Sort: Name</option>
+            </select>
+          </div>
+          <div class="toolbar-left">
+            <span class="badge" id="tierCount">0 players</span>
+            <button class="btn btn-ghost btn-sm" id="distBtn">Show distribution</button>
+          </div>
+        </div>
+        <div id="tierBoard"></div>
+        <div id="distPanel" class="hidden" style="margin-top:22px"></div>
+      </div>`;
+
+    document.getElementById("modeTabs").addEventListener("click", (e) => {
+      const b = e.target.closest("[data-mode]"); if (!b) return;
+      tiersState.mode = b.dataset.mode;
+      document.querySelectorAll("#modeTabs .mode").forEach((x) => x.classList.toggle("active", x === b));
+      drawTiers();
+    });
+    document.getElementById("tierSearch").oninput = (e) => { tiersState.q = e.target.value.toLowerCase().trim(); drawTiers(); };
+    document.getElementById("regionFilter").onchange = (e) => { tiersState.region = e.target.value; drawTiers(); };
+    document.getElementById("countryFilter").onchange = (e) => { tiersState.country = e.target.value; drawTiers(); };
+    document.getElementById("sortFilter").onchange = (e) => { tiersState.sort = e.target.value; drawTiers(); };
+    document.getElementById("distBtn").onclick = () => {
+      const p = document.getElementById("distPanel");
+      p.classList.toggle("hidden");
+      if (!p.classList.contains("hidden")) drawDistribution();
+    };
+    drawTiers();
+  }
+
+  function filteredPlayers() {
+    let arr = PLAYERS.filter((p) => p.name.toLowerCase().includes(tiersState.q));
+    if (tiersState.region !== "all") arr = arr.filter((p) => p.region === tiersState.region);
+    if (tiersState.country !== "all") arr = arr.filter((p) => p.country === tiersState.country);
+    const s = tiersState.sort;
+    arr.sort((a, b) => {
+      if (s === "name") return a.name.localeCompare(b.name);
+      return (b.totalPoints || 0) - (a.totalPoints || 0);
+    });
+    return arr;
+  }
+
+  function drawTiers() {
+    const board = document.getElementById("tierBoard");
+    const count = document.getElementById("tierCount");
+    const arr = filteredPlayers();
+    count.textContent = arr.length + " player" + (arr.length === 1 ? "" : "s");
+
+    if (tiersState.mode === "overall") {
+      /* v14: mcpvp.com/tiers-style rows.
+         Each row is a card: rank block on the left, a LARGE circular skin,
+         name + overall tier/points, a strip of kit tiles with their tier tag,
+         and the region flag on the right. */
+      const kitModes = MODES.filter((m) => m.id !== "overall");
+      const rows = arr.map((p, i) => {
+        const pos = i + 1;
+        const ot = overallTier(p);
+        const od = tierDef(ot);
+        const tiles = kitModes.map((mo) => {
+          const r = result(p, mo.id);
+          const tested = isTested(r);
+          const td = tested ? tierDef(r.tier) : null;
+          return `<div class="tr-kit${tested ? "" : " tr-kit-empty"}" title="${esc(mo.n)}${tested ? " \u00b7 " + esc(r.tier) : " \u00b7 not tested"}">
+            <span class="tr-kit-ico">${iconHTML(mo)}</span>
+            <span class="tr-kit-tag"${tested ? ` style="color:${td.color};background:${td.bg};border-color:${td.color}55"` : ""}>${tested ? esc(r.tier) : "???"}</span>
+          </div>`;
+        }).join("");
+        return `<div class="tr-card rank-${pos}" data-player="${p.id}">
+          <div class="tr-rank">${pos}</div>
+          <div class="tr-main">
+            <div class="tr-ava"><img class="tr-skin skin-full" src="${esc(skinUrl(p))}" alt="${esc(p.name)}" onerror="skinFallback(this)"></div>
+            <div class="tr-info">
+              <div class="tr-name">${esc(p.name)}<span class="tr-arrow">\u2192</span></div>
+              <div class="tr-sub">${esc(od.label)} <span class="tr-pts">(${p.totalPoints} Points)</span></div>
+              <div class="tr-kits">${tiles}</div>
+            </div>
+          </div>
+          <div class="tr-flag" title="${esc(regionName(p.region))}">${regionFlag(p.region)}</div>
+        </div>`;
+      }).join("");
+      board.innerHTML = rows
+        ? `<div class="tr-list">${rows}</div>`
+        : emptyState({
+            icon: "\ud83c\udfc6",
+            title: "No players ranked yet",
+            text: "Player tiers will appear here as soon as the first player is added. Add players from the admin panel or let the Discord bot post a result."
+          });
+    } else {
+      const buckets = { 1: [], 2: [], 3: [], 4: [], 5: [] };
+      arr.forEach((p) => { const r = result(p, tiersState.mode); const n = tierNum(r && r.tier); if (n) buckets[n].push(p); });
+      const mo = modeById(tiersState.mode);
+      board.innerHTML = `<div class="tier-board">${[1, 2, 3, 4, 5].map((n) => `
+        <div class="tier-col t${n}">
+          <div class="tier-col-head">${iconHTML(mo, "mini-icon-img")} Tier ${n}</div>
+          <div class="tier-col-list">${buckets[n].map((p) => {
+            const r = result(p, tiersState.mode);
+            return `<div class="tier-player" data-player="${p.id}"><img class="tier-skin" src="${esc(skinUrl(p))}" alt="${esc(p.name)}" onerror="skinFallback(this)"><span class="name">${esc(p.name)}</span><span class="pts">${esc(r.tier)}</span></div>`;
+          }).join("")}</div>
+        </div>`).join("")}</div>`;
+    }
+    board.querySelectorAll("[data-player]").forEach((el) => {
+      el.addEventListener("click", () => { const p = PLAYERS.find((x) => String(x.id) === el.dataset.player); if (p) openPlayer(p); });
+    });
+  }
+
+  function drawDistribution() {
+    const panel = document.getElementById("distPanel");
+    const counts = {};
+    TIER_DEFS.forEach((t) => (counts[t.code] = 0));
+    PLAYERS.forEach((p) => {
+      if (tiersState.mode === "overall") {
+        const t = TIER_DEFS.find((d) => p.totalPoints >= d.min);
+        if (t) counts[t.code]++;
+      } else {
+        const r = result(p, tiersState.mode);
+        if (isTested(r) && counts[r.tier] != null) counts[r.tier]++;
+      }
+    });
+    const max = Math.max(1, ...Object.values(counts));
+    panel.innerHTML = `<div class="card"><h3>Tier Distribution</h3>
+      <div style="display:flex;flex-direction:column;gap:8px;margin-top:14px">
+      ${TIER_DEFS.map((t) => `<div style="display:flex;align-items:center;gap:12px">
+        <span class="tier-label ${tierClass(t.code)}" style="min-width:52px;text-align:center">${t.code}</span>
+        <div class="progress" style="flex:1"><span style="width:${(counts[t.code] / max) * 100}%"></span></div>
+        <span style="min-width:34px;text-align:right;font-weight:800;font-size:12px">${counts[t.code]}</span>
+      </div>`).join("")}</div></div>`;
+  }
+
+  /* ---------- PLAYERS PAGE ---------- */
+  function playerCard(p) {
+    return `<div class="card" data-player="${p.id}" style="cursor:pointer">
+      <div style="display:flex;gap:14px;align-items:center">
+        <img class="pc-skin" src="${esc(skinUrl(p))}" alt="${esc(p.name)}" onerror="skinFallback(this)">
+        <div style="min-width:0">
+          <div class="p-name">${esc(p.name)}</div>
+          <div class="p-meta">${regionFlag(p.region)} ${esc(p.country || regionName(p.region))} · #${p.position}</div>
+          <div style="margin-top:7px">${badgeChip(p.position || 99, "rank-badge-sm")}</div>
+        </div>
+      </div>
+      <div class="modal-stats" style="margin-top:14px;grid-template-columns:repeat(3,1fr)">
+        <div class="modal-stat"><b>${p.totalPoints}</b><span>Points</span></div>
+        <div class="modal-stat"><b>${esc(p.team || "—")}</b><span>Team</span></div>
+        <div class="modal-stat"><b>${esc(p.favoriteKit ? modeById(p.favoriteKit).n : "—")}</b><span>Fav Kit</span></div>
+      </div>
+    </div>`;
+  }
+
+  function renderPlayers() {
+    const root = document.getElementById("players-root");
+    if (!root) return;
+    const grid = [...PLAYERS].sort((a, b) => a.position - b.position).map(playerCard).join("");
+    const emptyState = `<div class="card" style="grid-column:1/-1;padding:28px;text-align:center;line-height:1.8;">
+        <div style="font-size:34px;margin-bottom:8px;">👤</div>
+        <h3 style="margin:0 0 8px;">No players yet</h3>
+        <p style="margin:0;opacity:.8;font-size:14px;">The player list is empty — that is expected.<br>
+        Run <code>/register</code> or <code>/result</code> in the Discord bot and players appear here automatically.<br>
+        Or add players from the <a href="admin.html">Admin Panel</a> and download <code>players.js</code>.</p>
+      </div>`;
+    root.innerHTML = `
+      <div class="page-head"><div class="wrap">
+        <div class="crumbs"><a href="index.html">Home</a> / Players</div>
+        <h1>Player Directory</h1>
+        <p>Browse every ranked player. Click a card to open the full profile with career stats, tiers and badges.</p>
+      </div></div>
+      <div class="wrap">
+        <div class="toolbar"><div class="toolbar-left">
+          <input class="input search" id="pSearch" placeholder="Search player..." type="search">
+          <select class="select" id="pRegion"><option value="all">All regions</option>${Object.values(REGIONS).map((r) => `<option value="${r.code}">${r.name}</option>`).join("")}</select>
+        </div><span class="badge" id="pCount">${PLAYERS.length} players</span></div>
+        <div class="grid-3" id="pGrid">${grid || emptyState}</div>
+      </div>`;
+    const apply = () => {
+      const q = document.getElementById("pSearch").value.toLowerCase().trim();
+      const rg = document.getElementById("pRegion").value;
+      const list = PLAYERS.filter((p) => p.name.toLowerCase().includes(q) && (rg === "all" || p.region === rg)).sort((a, b) => a.position - b.position);
+      document.getElementById("pCount").textContent = list.length + " players";
+      document.getElementById("pGrid").innerHTML = list.map(playerCard).join("") || emptyState;
+      document.querySelectorAll("#pGrid [data-player]").forEach((el) => el.addEventListener("click", () => { const p = PLAYERS.find((x) => String(x.id) === el.dataset.player); if (p) openPlayer(p); }));
+    };
+    document.getElementById("pSearch").oninput = apply;
+    document.getElementById("pRegion").onchange = apply;
+    apply();
+    renderDataSourceNote();
+  }
+
+  /* ---------- data source note (Supabase live vs players.js) ---------- */
+  function renderDataSourceNote() {
+    const box = document.getElementById("data-source-note");
+    if (!box) return;
+    const cfg = window.SUPABASE_CONFIG || {};
+    const hasKey = !!(cfg.url && cfg.anonKey);
+    const live = window.MCRANKED_LIVE_ACTIVE === true;
+    let html;
+    if (live) {
+      html = `<div style="display:flex;gap:10px;align-items:flex-start;padding:12px 16px;border-radius:12px;background:rgba(34,197,94,.10);border:1px solid rgba(34,197,94,.35);font-size:13.5px;line-height:1.6;">
+        <span style="font-size:16px;">🟢</span>
+        <div><b>Live data — Supabase</b><br>Every player on this page comes straight from your Supabase <code>players</code> table. Submit a result in the Discord bot and it shows up here within seconds.</div>
+      </div>`;
+    } else if (!hasKey) {
+      html = `<div style="display:flex;gap:10px;align-items:flex-start;padding:12px 16px;border-radius:12px;background:rgba(234,179,8,.10);border:1px solid rgba(234,179,8,.35);font-size:13.5px;line-height:1.6;">
+        <span style="font-size:16px;">🟡</span>
+        <div><b>Static data — players.js</b><br>No Supabase key is configured yet, so data is coming from the <code>players.js</code> file.<br>
+        To enable live data: open <code>supabase-config.js</code> and set <code>url</code> and <code>anonKey</code> (Supabase → Project Settings → API Keys → Project URL + <code>sb_publishable_...</code>).</div>
+      </div>`;
+    } else {
+      html = `<div style="display:flex;gap:10px;align-items:flex-start;padding:12px 16px;border-radius:12px;background:rgba(239,68,68,.10);border:1px solid rgba(239,68,68,.35);font-size:13.5px;line-height:1.6;">
+        <span style="font-size:16px;">🔴</span>
+        <div><b>Could not connect to Supabase</b><br>A key is configured but no data arrived. Likely cause: the <code>players</code> table has not been created yet, or the key is wrong.<br>
+        Fix: run <code>supabase-setup.sql</code> in Supabase → SQL Editor, then reload the page. (Showing <code>players.js</code> for now)</div>
+      </div>`;
+    }
+    box.innerHTML = html;
+  }
+
+  /* ---------- KITS PAGE ---------- */
+  function renderKits() {
+    const root = document.getElementById("kits-root");
+    if (!root) return;
+    const kitModes = MODES.filter((m) => m.id !== "overall");
+    const cards = kitModes.map((m) => {
+      const tested = PLAYERS.filter((p) => isTested(result(p, m.id)));
+      const top = tested.sort((a, b) => (result(b, m.id).points || 0) - (result(a, m.id).points || 0))[0];
+      return `<div class="card kit-card">
+        <div class="kit-icon">${iconHTML(m, "mini-icon-img")}</div>
+        <h3>${esc(m.n)}</h3>
+        <p>${tested.length} players ranked</p>
+        ${top ? `<div style="margin-top:12px"><span class="badge gold">#1 ${esc(top.name)}</span></div>` : ""}
+        <div style="margin-top:14px"><a class="btn btn-ghost btn-sm" href="tiers.html">View tiers →</a></div>
+      </div>`;
+    }).join("");
+    root.innerHTML = `
+      <div class="page-head"><div class="wrap">
+        <div class="crumbs"><a href="index.html">Home</a> / Kits</div>
+        <h1>Kits &amp; Gamemodes</h1>
+        <p>Every kit tracked on ${esc(SITE.siteName)}. ${kitModes.length} kits across core and new gamemodes.</p>
+      </div></div>
+      <div class="wrap"><div class="grid-4">${cards}</div></div>`;
+  }
+
+  /* ---------- TOURNEYS PAGE ---------- */
+  function renderTourneys() {
+    const root = document.getElementById("tourneys-root");
+    if (!root) return;
+    const statusBadge = (s) => s === "live" ? `<span class="badge red">● LIVE</span>` : s === "open" ? `<span class="badge green">Open</span>` : s === "upcoming" ? `<span class="badge">Upcoming</span>` : `<span class="badge">Finished</span>`;
+    const list = D.TOURNEYS || [];
+    const cards = list.map((t) => {
+      const mo = modeById(t.kit);
+      const pct = Math.round((t.filled / t.slots) * 100);
+      return `<div class="card tourney-card">
+        <div class="tourney-top">
+          <div style="display:flex;gap:12px;align-items:center">
+            <div class="kit-icon" style="width:40px;height:40px;margin:0">${iconHTML(mo, "mini-icon-img")}</div>
+            <div><h3 style="margin:0">${esc(t.name)}</h3><p style="margin:2px 0 0">${esc(mo.n)} · ${esc(t.date)}</p></div>
+          </div>
+          ${statusBadge(t.status)}
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <span class="tourney-prize">${esc(t.prize)}</span>
+          <span style="font-size:12px;color:var(--muted)">${t.filled}/${t.slots} slots</span>
+        </div>
+        <div class="progress"><span style="width:${pct}%"></span></div>
+        <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--muted)">
+          <span>Winner: <b style="color:#fff">${esc(t.winner)}</b></span>
+          <span>${pct}% full</span>
+        </div>
+      </div>`;
+    }).join("");
+    root.innerHTML = `
+      <div class="page-head"><div class="wrap">
+        <div class="crumbs"><a href="index.html">Home</a> / Tourneys</div>
+        <h1>Tournaments</h1>
+        <p>Compete for cash prizes in weekly and monthly ${esc(SITE.siteName)} tournaments across every kit.</p>
+      </div></div>
+      <div class="wrap">${list.length ? `<div class="grid-3">${cards}</div>` : emptyState({
+        icon: "🏆",
+        title: "No tournaments running",
+        text: "There are no live or scheduled tournaments right now. New events will be announced here and on Discord.",
+        action: { href: SITE.discordUrl || "#", label: "Join Discord for updates" }
+      })}</div>`;
+  }
+
+  /* ---------- NEWS PAGE ---------- */
+  function renderNews() {
+    const root = document.getElementById("news-root");
+    if (!root) return;
+    const list = D.NEWS || [];
+    const cards = list.map((n) => `
+      <article class="news-card">
+        ${n.image ? `<div class="news-media"><img src="${esc(n.image)}" alt="${esc(n.title)}" loading="lazy" onerror="this.parentElement.style.display='none'"></div>` : ""}
+        <div class="news-body">
+          ${(n.tags && n.tags.length) ? `<div class="news-tags">${n.tags.map((t) => `<span class="news-tag">${esc(t)}</span>`).join("")}</div>` : ""}
+          <h3>${esc(n.title)}</h3><p>${esc(n.desc)}</p>
+          <div class="news-date">${esc(n.date)}</div>
+        </div>
+      </article>`).join("");
+    root.innerHTML = `
+      <div class="page-head"><div class="wrap">
+        <div class="crumbs"><a href="index.html">Home</a> / News</div>
+        <h1>News &amp; Updates</h1>
+        <p>Patch notes, kit releases, season resets and everything happening on ${esc(SITE.siteName)}.</p>
+      </div></div>
+      <div class="wrap">${list.length ? `<div class="news-grid">${cards}</div>` : emptyState({
+        icon: "📰",
+        title: "No news published yet",
+        text: "Announcements, patch notes and season updates will appear here once they are published."
+      })}</div>`;
+  }
+
+  /* ---------- SERVERS PAGE ---------- */
+  function renderServers() {
+    const root = document.getElementById("servers-root");
+    if (!root) return;
+    const list = D.SERVER_REGIONS || [];
+    const totalServers = list.reduce((a, r) => a + (Number(r.servers) || 0), 0);
+    const totalOnline = list.reduce((a, r) => a + (Number(r.online) || 0), 0);
+    const rows = list.map((r) => `
+      <li class="loc-region">
+        <span class="loc-name"><span class="loc-dot"></span>${esc(r.name)}${r.ip ? ` <small style="color:var(--muted);font-weight:600">${esc(r.ip)}</small>` : ""}</span>
+        <span class="loc-metrics"><span>${Number(r.servers) || 0} Servers</span><span class="loc-online">● ${Number(r.online) || 0} Online</span></span>
+      </li>`).join("");
+    root.innerHTML = `
+      <div class="page-head"><div class="wrap">
+        <div class="crumbs"><a href="index.html">Home</a> / Servers</div>
+        <h1>Server Network</h1>
+        <p>Play Anywhere. Queue From Anywhere. ${list.length ? `${totalServers} servers across ${list.length} regions.` : "Your server list is empty — add your own servers to get started."}</p>
+      </div></div>
+      <div class="wrap">
+        ${list.length ? `
+        <div class="stats-strip" style="grid-template-columns:repeat(3,1fr);margin-bottom:26px">
+          <div class="stat-card"><div class="stat-value">${totalServers}</div><div class="stat-label">Total Servers</div></div>
+          <div class="stat-card"><div class="stat-value">${totalOnline.toLocaleString()}</div><div class="stat-label">Players Online</div></div>
+          <div class="stat-card"><div class="stat-value">${list.length}</div><div class="stat-label">Regions</div></div>
+        </div>
+        <div class="locations">
+          <div class="locations-map"><img src="images/map.png" alt="Server locations map" loading="lazy">
+            <div class="locations-count">🌐 ${totalServers} Locations</div></div>
+          <ul class="locations-list">${rows}</ul>
+        </div>` : emptyState({
+          icon: "🌐",
+          title: "No servers added yet",
+          text: "No servers have been added yet. Server details will appear here once they are set up."
+        })}
+      </div>`;
+  }
+
+  /* ---------- scroll reveal (transform-only, never hides content) ---------- */
+  function initReveal() {
+    const targets = document.querySelectorAll(".section, .page-head, main > .wrap");
+    if (!targets.length) return;
+    document.documentElement.classList.add("js-ready");
+    if (!("IntersectionObserver" in window)) { targets.forEach((t) => t.classList.add("reveal", "in")); return; }
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } });
+    }, { rootMargin: "0px 0px -6% 0px", threshold: 0.04 });
+    targets.forEach((t) => { t.classList.add("reveal"); io.observe(t); });
+    setTimeout(() => targets.forEach((t) => t.classList.add("in")), 1600);
+  }
+
+  /* ---------- boot ---------- */
+  function renderAll() {
+    renderNav();
+    renderFooter();
+    renderHome();
+    renderTiers();
+    renderPlayers();
+    renderKits();
+    renderTourneys();
+    renderNews();
+    renderServers();
+    initReveal();
+  }
+
+  document.addEventListener("DOMContentLoaded", async () => {
+    /* Option A: if supabase-live.js is present and configured, it exposes
+       window.MCRANKED_LIVE — a promise of the live players array. When it
+       resolves with an array we render that instead of the static
+       players.js. On any failure it resolves null and we keep players.js. */
+    try {
+      if (window.MCRANKED_LIVE && typeof window.MCRANKED_LIVE.then === "function") {
+        const live = await window.MCRANKED_LIVE;
+        if (Array.isArray(live)) {
+          PLAYERS = live;
+          D.PLAYERS = live;
+        }
+      }
+    } catch (e) {
+      console.warn("[Vortex Tier] live data unavailable, using players.js");
+    }
+    renderAll();
+  });
+})();
