@@ -17,10 +17,10 @@
 
 window.SUPABASE_CONFIG = {
   /* 👇 PASTE HERE — 1) Project URL */
-  url: "",
+  url: "https://lmrugwbuoziipijxyoff.supabase.co/rest/v1/",
 
   /* 👇 PASTE HERE — 2) sb_publishable_... key */
-  anonKey: "",
+  anonKey: "sb_publishable_3iJndMbcXWSfs-edESy-cw_X4L3ufV5",
 
   table: "players"
 };
